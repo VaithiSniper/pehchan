@@ -28,11 +28,6 @@ export default function Login() {
           <div>
             <p className="text-6xl font-sans font-bold">Login</p>
           </div>
-          <LoginComponent
-            text="Login"
-            path="/admin/dashboard"
-            method={authUser}
-          />
         </div>
       </div>
       <footer className={styles.footer}>
