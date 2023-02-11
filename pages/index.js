@@ -1,6 +1,10 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import styles from "../styles/Home.module.css";
+import { Suspense } from "react";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
+import EthTest from "../components/ethtest";
 
 export default function Home() {
   const router = useRouter();
@@ -22,13 +26,17 @@ export default function Home() {
       </Head>
 
       <div className={styles.main}>
-        <div className="flex flex-col justify-center space-y-8 items-center">
-          <div>
+        <div className="grid grid-cols-6 gap-4 gap-x-12">
+          <div className="w-full col-start-2 col-end-4 justify-center">
             <p className="text-6xl font-heading font-bold">
-              Your <span className="font-hindi text-banner text-gold">पहचान</span>
+              Your{" "}
+              <span className="font-hindi text-banner text-gold">पहचान</span>
             </p>
           </div>
-          <div>
+          <div className="w-full col-start-5 col-end-5">
+            <EthTest />
+          </div>
+          {/* <div>
             <div>
               <button
                 onClick={(e) => {
@@ -50,7 +58,7 @@ export default function Home() {
                 </svg>
               </button>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       <footer className={styles.footer}>

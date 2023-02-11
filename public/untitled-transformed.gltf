@@ -1,0 +1,403 @@
+{
+  "asset": {
+    "generator": "glTF-Transform v3.0.0-alpha.4",
+    "version": "2.0"
+  },
+  "accessors": [
+    {
+      "type": "SCALAR",
+      "componentType": 5123,
+      "count": 2244
+    },
+    {
+      "type": "VEC3",
+      "componentType": 5126,
+      "count": 392,
+      "max": [
+        244.1079864501953,
+        393.6180419921875,
+        155.44158935546875
+      ],
+      "min": [
+        -244.1079864501953,
+        -398.92047119140625,
+        -155.44158935546875
+      ]
+    },
+    {
+      "type": "VEC3",
+      "componentType": 5126,
+      "count": 392
+    },
+    {
+      "type": "VEC2",
+      "componentType": 5126,
+      "count": 392
+    },
+    {
+      "type": "SCALAR",
+      "componentType": 5125,
+      "count": 7074804
+    },
+    {
+      "type": "VEC3",
+      "componentType": 5126,
+      "count": 2011616,
+      "max": [
+        1.0000001192092896,
+        1.8700222969055176,
+        2.3003768920898438
+      ],
+      "min": [
+        -1.0000001192092896,
+        -1.0000009536743164,
+        -1.4269871711730957
+      ]
+    },
+    {
+      "type": "VEC3",
+      "componentType": 5126,
+      "count": 2011616
+    },
+    {
+      "type": "VEC2",
+      "componentType": 5126,
+      "count": 2011616
+    },
+    {
+      "type": "SCALAR",
+      "componentType": 5125,
+      "count": 725760
+    },
+    {
+      "type": "VEC3",
+      "componentType": 5126,
+      "count": 483840,
+      "max": [
+        -1.6020468473434448,
+        8.314861297607422,
+        10.696462631225586
+      ],
+      "min": [
+        -27.299278259277344,
+        -2.9416303634643555,
+        -6.293701648712158
+      ]
+    },
+    {
+      "type": "VEC3",
+      "componentType": 5126,
+      "count": 483840
+    },
+    {
+      "type": "VEC2",
+      "componentType": 5126,
+      "count": 483840
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 2588
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 2588,
+      "byteLength": 2418952
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 2421540,
+      "byteLength": 662568
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "extensions": {
+        "EXT_texture_webp": {
+          "source": 1
+        }
+      }
+    },
+    {
+      "sampler": 0,
+      "extensions": {
+        "EXT_texture_webp": {
+          "source": 0
+        }
+      }
+    },
+    {
+      "sampler": 0,
+      "extensions": {
+        "EXT_texture_webp": {
+          "source": 2
+        }
+      }
+    }
+  ],
+  "images": [
+    {
+      "name": "TexturesCom_WornMetal_1K_normal",
+      "uri": "untitled-transformed_img0.webp"
+    },
+    {
+      "name": "TexturesCom_WornMetal_1K_ao",
+      "uri": "untitled-transformed_img1.webp"
+    },
+    {
+      "name": "TexturesCom_WornMetal_1K_metallic-TexturesCom_WornMetal_1K_roughness",
+      "uri": "untitled-transformed_img2.webp"
+    }
+  ],
+  "buffers": [
+    {
+      "uri": "untitled-transformed_data.bin",
+      "byteLength": 3084108
+    }
+  ],
+  "materials": [
+    {
+      "name": "Metallic",
+      "doubleSided": true,
+      "pbrMetallicRoughness": {
+        "roughnessFactor": 0.10000000149011612
+      }
+    },
+    {
+      "name": "metalchain",
+      "doubleSided": true,
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicRoughnessTexture": {
+          "index": 2
+        }
+      },
+      "normalTexture": {
+        "index": 1
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Mesh.004",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 1,
+            "NORMAL": 2,
+            "TEXCOORD_0": 3
+          },
+          "mode": 4,
+          "material": 0,
+          "indices": 0,
+          "extensions": {
+            "KHR_draco_mesh_compression": {
+              "bufferView": 0,
+              "attributes": {
+                "POSITION": 0,
+                "NORMAL": 1,
+                "TEXCOORD_0": 2
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cylinder.001",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 5,
+            "NORMAL": 6,
+            "TEXCOORD_0": 7
+          },
+          "mode": 4,
+          "material": 0,
+          "indices": 4,
+          "extensions": {
+            "KHR_draco_mesh_compression": {
+              "bufferView": 1,
+              "attributes": {
+                "POSITION": 0,
+                "NORMAL": 1,
+                "TEXCOORD_0": 2
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Torus",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 9,
+            "NORMAL": 10,
+            "TEXCOORD_0": 11
+          },
+          "mode": 4,
+          "material": 1,
+          "indices": 8,
+          "extensions": {
+            "KHR_draco_mesh_compression": {
+              "bufferView": 2,
+              "attributes": {
+                "POSITION": 0,
+                "NORMAL": 1,
+                "TEXCOORD_0": 2
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "name": "Ethereum_3D_logo:Object_0",
+      "translation": [
+        -1760.607666015625,
+        354.54180908203125,
+        -1638.6549072265625
+      ],
+      "rotation": [
+        0.1318160444498062,
+        -0.6290555596351624,
+        0.009457374922931194,
+        0.7660444974899292
+      ],
+      "scale": [
+        11.386874198913574,
+        11.386874198913574,
+        7.459105014801025
+      ],
+      "mesh": 0
+    },
+    {
+      "name": "Ethereum_3D_logo:Object_2",
+      "children": [
+        0
+      ]
+    },
+    {
+      "name": "Ethereum_3D_logo:Ethereum_obj_cleaner_materialmerger_gles",
+      "children": [
+        1
+      ]
+    },
+    {
+      "name": "Ethereum_3D_logo:Sketchfab_model",
+      "rotation": [
+        -0.7071068286895752,
+        0,
+        0,
+        0.7071067094802856
+      ],
+      "children": [
+        2
+      ]
+    },
+    {
+      "name": "Ethereum_3D_logo:Meshes",
+      "scale": [
+        0.37853050231933594,
+        0.37853050231933594,
+        0.37853050231933594
+      ],
+      "children": [
+        3
+      ]
+    },
+    {
+      "name": "Ethereum_3D_logo:scene",
+      "translation": [
+        -6.756777763366699,
+        -0.694328784942627,
+        -0.27313923835754395
+      ],
+      "rotation": [
+        -0.17389187216758728,
+        -0.631036639213562,
+        0.6907374858856201,
+        -0.30730462074279785
+      ],
+      "scale": [
+        0.009999999776482582,
+        0.009999999776482582,
+        0.009999999776482582
+      ],
+      "children": [
+        4
+      ]
+    },
+    {
+      "name": "Cylinder",
+      "translation": [
+        -1.0081582069396973,
+        1.8628308773040771,
+        12.167520523071289
+      ],
+      "rotation": [
+        0.04513126239180565,
+        -0.49725911021232605,
+        0.0929771140217781,
+        -0.8614242672920227
+      ],
+      "scale": [
+        6.270584583282471,
+        7.211066722869873,
+        1.7211700677871704
+      ],
+      "mesh": 1
+    },
+    {
+      "name": "Torus",
+      "translation": [
+        0.6504287719726562,
+        -0.6943287253379822,
+        -2.9991190433502197
+      ],
+      "rotation": [
+        0.04513126239180565,
+        -0.49725911021232605,
+        0.0929771140217781,
+        -0.8614242672920227
+      ],
+      "mesh": 2
+    }
+  ],
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [
+        5,
+        6,
+        7
+      ]
+    }
+  ],
+  "scene": 0,
+  "extensionsUsed": [
+    "EXT_texture_webp",
+    "KHR_draco_mesh_compression"
+  ],
+  "extensionsRequired": [
+    "EXT_texture_webp",
+    "KHR_draco_mesh_compression"
+  ]
+}
