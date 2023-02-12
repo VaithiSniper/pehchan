@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import EthTest from "../components/ethtest";
+import Typewriter from "typewriter-effect";
 
 export default function Home() {
   const router = useRouter();
@@ -28,10 +29,30 @@ export default function Home() {
       <div className={styles.main}>
         <div className="grid grid-cols-6 gap-4 gap-x-12">
           <div className="w-full col-start-2 col-end-4 justify-center">
-            <p className="text-6xl font-heading font-bold">
-              Your{" "}
-              <span className="font-hindi text-banner text-gold">पहचान</span>
-            </p>
+            <div className="text-6xl font-heading font-bold">
+              Your
+              <span className="text-banner text-gold">
+                <Typewriter
+                  options={{
+                    strings: [
+                      "Identity",
+                      "पहचान",
+                      "ಗುರುತು",
+                      "அடையாளம்",
+                      "గురుతు",
+                      "അടുത്തത്",
+                      "আপনার পরিচয়",
+                      "તમારું પરિચય",
+                      "ਤੁਹਾਡਾ ਪਰਿਚਯ",
+                      "ତୁହାର ପ୍ରତିନିଧି",
+                      "உங்கள் அடையாளம்",
+                    ],
+                    autoStart: true,
+                    loop: true,
+                  }}
+                />
+              </span>
+            </div>
           </div>
           <div className="w-full col-start-5 col-end-5">
             <EthTest />
@@ -61,19 +82,6 @@ export default function Home() {
           </div> */}
         </div>
       </div>
-      <footer className={styles.footer}>
-        <em>
-          Made with ❤️ by
-          <a
-            href="https://github.com/VaithiSniper"
-            className="text-white"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vaithi Sniper
-          </a>
-        </em>
-      </footer>
     </div>
   );
 }
