@@ -33,6 +33,7 @@
     "react-dom": "18.2.0",
     "short-unique-id": "^4.4.4",
     "three": "^0.149.0",
+    "typewriter-effect": "^2.19.0",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
