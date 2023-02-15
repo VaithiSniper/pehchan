@@ -16,7 +16,8 @@ module.exports = {
     fontFamily: {
       'heading': ['Unbounded', 'monospace'],
       'sub': ['Inter', 'serif'],
-      'hindi': ['Tiro Devanagari Hindi']
+      'hindi': ['Tiro Devanagari Hindi'],
+      'space': ['Space Grotesk']
     },
     fontSize: {
       sm: '0.8rem',
@@ -28,6 +29,11 @@ module.exports = {
       '5xl': '3.052rem',
       '6xl': '3.560rem',
       'banner': '5.560rem',
+    },
+    extend: {
+      backdropBlur: {
+        lg: '200px',
+      }
     }
   },
   plugins: [require("@tailwindcss/forms")],
