@@ -18,7 +18,6 @@ export default function Home() {
     name: "",
     party: "",
     age: 18,
-    isAdded: false,
   });
 
   const [signer, setSigner] = useState();
@@ -97,6 +96,7 @@ export default function Home() {
 
   const handleAddRecord = (e) => {
     e.preventDefault();
+    console.log(record);
     // TODO: Write to contract with these values
   };
 

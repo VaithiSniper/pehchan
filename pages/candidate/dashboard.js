@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
-import candidateAbiArray from "../../contracts/candidateAbiArray";
+import abiArray from "../../contracts/candidateAbiArray";
 import * as PushAPI from "@pushprotocol/restapi";
 import * as ethers from "ethers";
 import Card from "../../components/card";
@@ -14,6 +14,16 @@ import {
 import Image from "next/image";
 import { Tooltip } from "react-tooltip";
 import Link from "../../components/link";
+
+function stat(n) {
+  return n > 0
+    ? n == 1
+      ? "In_Review"
+      : n == 2
+      ? "KYC_Pending"
+      : "Approved"
+    : "initalDefault";
+}
 
 const Dashboard = () => {
   //setup router object
@@ -32,13 +42,20 @@ const Dashboard = () => {
     else router.push("/login");
   }, [tooltipState]);
 
-  const { data, isError, isLoading } = useContractRead({
-    address: process.env.NEXT_PUBLIC_CANDIDATE_SMART_CONTRACT_ADDRESS,
-    abi: sampleAbiArray,
-    functionName: 'getStatusOfCandidate',
-    args: [address]
-  })
-  console.log(data)
+  const contractAddress = "0xEc0b043C4FbEE32A0c486b727980C6bfb0FFfDEA";
+  const contractAbi = new ethers.utils.Interface(abiArray);
+
+  let status = 0;
+  if (address != null) {
+    const { data, isError, isLoading, error } = useContractRead({
+      address: contractAddress,
+      abi: contractAbi,
+      functionName: "getStatusOfCandidate",
+      args: [address],
+    });
+    console.log(data);
+    if (data) status = stat(data[1]);
+  }
 
   return (
     <div className="justify-center items-center text-center gap-8 flex flex-row">
@@ -94,11 +111,35 @@ const Dashboard = () => {
             What do you want to do?
           </h3>
         </>
-        <div className="text-md text-gray-500 dark:text-gray-300 pa-4 space-x-8 flex flex-row font-space justify-center items-center text-center">
-          <>
-            <Card title="Fill in your apllication" text="Apply" path="/candidate/application" />
-          </>
-        </div>
+        {status == "initalDefault" ? (
+          <div className="text-md text-gray-500 dark:text-gray-300 pa-4 space-x-8 flex flex-row font-space justify-center items-center text-center">
+            <>
+              <Card
+                title="Fill in your apllication"
+                text="Apply"
+                path="/candidate/application"
+              />
+            </>
+          </div>
+        ) : status == "In_Review" ? (
+          <div className="text-md text-gray-500 dark:text-gray-300 pa-4 space-x-8 flex flex-row font-space justify-center items-center text-center">
+            <>
+              <Card title="Your application is in review" />
+            </>
+          </div>
+        ) : status == "KYC_Pending" ? (
+          <div className="text-md text-gray-500 dark:text-gray-300 pa-4 space-x-8 flex flex-row font-space justify-center items-center text-center">
+            <>
+              <Card title="Your KYC is pending" />
+            </>
+          </div>
+        ) : status == "Approved" ? (
+          <div className="text-md text-gray-500 dark:text-gray-300 pa-4 space-x-8 flex flex-row font-space justify-center items-center text-center">
+            <>
+              <Card title="Your application has been approved!" />
+            </>
+          </div>
+        ) : null}
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import abiArray from "../../contracts/candidateAbiArray";
@@ -7,13 +8,10 @@ import {
   useAccount,
   useSigner,
   useProvider,
+  useContractWrite,
+  usePrepareContractWrite,
 } from "wagmi";
 import { ethers, signer } from "ethers";
-
-const getDataOfCandidate = async (contract) =>
-  await contract.getDataOfCandidate(
-    "0x379f7dEBf9495D8DE278A4A45A401F27f38564B7"
-  );
 
 export default function Home() {
   const router = useRouter();
@@ -22,13 +20,11 @@ export default function Home() {
     name: "",
     party: "",
     age: 18,
-    isAdded: false,
   });
 
   const [signer, setSigner] = useState();
 
-  const contractAddress =
-    process.env.NEXT_PUBLIC_CANDIDATE_SMART_CONTRACT_ADDRESS;
+  const contractAddress = "0xEc0b043C4FbEE32A0c486b727980C6bfb0FFfDEA";
   const contractAbi = new ethers.utils.Interface(abiArray);
 
   const { address } = useAccount();
@@ -41,7 +37,13 @@ export default function Home() {
     },
   });
 
-  let contract = null;
+  const { config, error } = usePrepareContractWrite({
+    address: contractAddress,
+    abi: abiArray,
+    functionName: "addCandidate",
+    args: [address, record.name, record.party, Number(record.age)],
+  });
+  const { data, isLoading, isSuccess, write } = useContractWrite(config);
 
   // if (signer !== null) {
   //   const wallet = new ethers.Wallet(
@@ -59,15 +61,6 @@ export default function Home() {
   //   const res = contract.getDataOfCandidate(
   //     "0x379f7dEBf9495D8DE278A4A45A401F27f38564B7"
   //   );
-
-  //   // const { data, isError, isLoading, error } = useContractRead({
-  //   //   address: contractAddress,
-  //   //   abi: abiArray,
-  //   //   functionName: "getDataOfCandidate",
-  //   //   args: ["0x379f7dEBf9495D8DE278A4A45A401F27f38564B7"],
-  //   //   signerOrProvider: signer,
-  //   // });
-  //   // console.log(data, isError, error);
 
   //   console.log(res);
 
@@ -95,6 +88,7 @@ export default function Home() {
 
   const handleAddRecord = (e) => {
     e.preventDefault();
+    write?.();
     // TODO: Write to contract with these values
   };
 
@@ -172,13 +166,25 @@ export default function Home() {
                   />
                 </div>
               </div>
+
+              <div className="sm:col-span-12 lg:col-span-4">
+                <label
+                  htmlFor="aadharfile"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Upload Aadhar Card
+                </label>
+                <div className="block w-full text-sm text-slate-500 border-2 border-white p-2">
+                  <input type="file" name="myAadhar" onChange={handleChange} />
+                </div>
+              </div>
             </div>
             <button
               onClick={handleAddRecord}
               type="submit"
               className="text-white bg-green hover:bg-blue-800 focus:ring-4 focus:outline-none font-bold rounded-lg text-sm w-1/4 px-5 py-2.5 text-center"
             >
-              Enter
+              Save
             </button>
           </div>
         </div>
