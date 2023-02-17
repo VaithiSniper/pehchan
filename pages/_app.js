@@ -20,6 +20,7 @@ const { chains, provider, webSocketProvider } = configureChains(chainList, [
     rpc: () => ({
       http: `https://goerli.blockpi.network/v1/rpc/public`,
     }),
+
   }),
   publicProvider(),
 ]);
