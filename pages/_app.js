@@ -1,7 +1,4 @@
 import "../styles/globals.css";
-import styles from "../styles/Home.module.css";
-import Layout from "../components/layout";
-
 import { configureChains, WagmiConfig, createClient } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
@@ -12,20 +9,18 @@ import {
   polygon,
   polygonMumbai,
 } from "wagmi/chains";
-
+import styles from "../styles/Home.module.css";
 import "react-tooltip/dist/react-tooltip.css";
-
-// import { sendTokensReceivedNotification, TokensReceived } from "../push.config";
+import Layout from "../components/layout";
 
 const chainList = [mainnet, goerli, filecoinHyperspace, polygon, polygonMumbai];
 
 const { chains, provider, webSocketProvider } = configureChains(chainList, [
   jsonRpcProvider({
-    rpc: () => {
-      return {
-        http: "https://goerli.blockpi.network/v1/rpc/public",
-      };
-    },
+    rpc: () => ({
+      http: `https://goerli.blockpi.network/v1/rpc/public`,
+    }),
+
   }),
   publicProvider(),
 ]);
