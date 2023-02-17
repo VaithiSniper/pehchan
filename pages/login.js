@@ -21,12 +21,14 @@ export default function Login() {
   useEffect(() => {
     if (isConnected) {
       // If wallet is already connected, push them to dashboard
-      console.log(isConnected ? "Connected" : "Not connected");
-      // Check if owner
-      console.log(address, process.env.NEXT_PUBLIC_OWNER_ADDRESS);
-      if (address === process.env.NEXT_PUBLIC_OWNER_ADDRESS)
-        router.push("/admin/dashboard");
-      else router.push("/user/dashboard");
+      console.log(isConnected ? "Connected" : "Not connected")
+      // Modify dashboard component and put that route here
+      const ownerAddress = process.env.NEXT_PUBLIC_OWNER_ADDRESS;
+      if(ownerAddress==address)
+      router.push("/candidate/dashboard")
+      else
+      router.push("/user/dashboard")
+
     }
   }, []);
 
