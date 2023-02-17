@@ -9,7 +9,11 @@ import Toast from "../components/toast";
 export default function Login() {
   const router = useRouter();
   const { connect, error, isLoading } = useConnect({
-    connector: new InjectedConnector(),
+    connector: new InjectedConnector({
+      options: {
+        shimDisconnect: true,
+      },
+    }),
   });
 
   const { isConnected, address } = useAccount();

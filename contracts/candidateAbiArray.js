@@ -1,157 +1,215 @@
 const abiArray = [
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"components": [
-					{
-						"internalType": "string",
-						"name": "name",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "party",
-						"type": "string"
-					},
-					{
-						"internalType": "uint256",
-						"name": "age",
-						"type": "uint256"
-					},
-					{
-						"internalType": "bool",
-						"name": "isAdded",
-						"type": "bool"
-					}
-				],
-				"indexed": false,
-				"internalType": "struct Candidate.candidateDetails",
-				"name": "details",
-				"type": "tuple"
-			}
-		],
-		"name": "GetDetailsOfCandidate",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "_value",
-				"type": "string"
-			}
-		],
-		"name": "Message",
-		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_candidateAddress",
-				"type": "address"
-			},
-			{
-				"internalType": "string",
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_party",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_age",
-				"type": "uint256"
-			}
-		],
-		"name": "addCandidate",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_candidateAddress",
-				"type": "address"
-			}
-		],
-		"name": "removeCandidate",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_candidateAddress",
-				"type": "address"
-			}
-		],
-		"name": "getDataOfCandidate",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			},
-			{
-				"components": [
-					{
-						"internalType": "string",
-						"name": "name",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "party",
-						"type": "string"
-					},
-					{
-						"internalType": "uint256",
-						"name": "age",
-						"type": "uint256"
-					},
-					{
-						"internalType": "bool",
-						"name": "isAdded",
-						"type": "bool"
-					}
-				],
-				"internalType": "struct Candidate.candidateDetails",
-				"name": "",
-				"type": "tuple"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "owner",
-		"outputs": [
-			{
-				"internalType": "address payable",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	}
-]
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "candidateAddress",
+        type: "address",
+      },
+    ],
+    name: "candidateRemoved",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "candidateAddress",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "enum Candidate.applicationStatus",
+        name: "",
+        type: "uint8",
+      },
+    ],
+    name: "candidateStatus",
+    type: "event",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_candidateAddress",
+        type: "address",
+      },
+      {
+        internalType: "string",
+        name: "_name",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_party",
+        type: "string",
+      },
+      {
+        internalType: "uint8",
+        name: "_age",
+        type: "uint8",
+      },
+    ],
+    name: "addCandidate",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_candidateAddress",
+        type: "address",
+      },
+    ],
+    name: "removeCandidate",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_candidateAddress",
+        type: "address",
+      },
+    ],
+    name: "upgradeCandidate",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "candidateMetadataArray",
+    outputs: [
+      {
+        internalType: "string",
+        name: "name",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "party",
+        type: "string",
+      },
+      {
+        internalType: "uint256",
+        name: "age",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "candidatesCount",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_candidateAddress",
+        type: "address",
+      },
+    ],
+    name: "getDataOfCandidate",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+      {
+        components: [
+          {
+            internalType: "string",
+            name: "name",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "party",
+            type: "string",
+          },
+          {
+            internalType: "uint256",
+            name: "age",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct Candidate.candidateMetadata",
+        name: "",
+        type: "tuple",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_candidateAddress",
+        type: "address",
+      },
+    ],
+    name: "getStatusOfCandidate",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+      {
+        internalType: "enum Candidate.applicationStatus",
+        name: "",
+        type: "uint8",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [
+      {
+        internalType: "address payable",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+];
 
 export default abiArray;

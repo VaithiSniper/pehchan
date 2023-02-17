@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import { configureChains, WagmiConfig, createClient } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
+import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 import {
   mainnet,
   goerli,
@@ -15,6 +16,11 @@ import Layout from "../components/layout";
 const chainList = [mainnet, goerli, filecoinHyperspace, polygon, polygonMumbai];
 
 const { chains, provider, webSocketProvider } = configureChains(chainList, [
+  jsonRpcProvider({
+    rpc: () => ({
+      http: `https://goerli.blockpi.network/v1/rpc/public`,
+    }),
+  }),
   publicProvider(),
 ]);
 

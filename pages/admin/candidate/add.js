@@ -1,138 +1,128 @@
+import React, { useState, useRef, useMemo, useCallback } from "react";
 import Head from "next/head";
-import { useState } from "react";
+import { AgGridReact } from "ag-grid-react";
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import { useRouter } from "next/router";
-import abiArray from "../../../contracts/candidateAbiArray";
-import { useContract, useContractRead, useAccount } from "wagmi";
+import ShortUniqueId from "short-unique-id";
+import { TrashIcon } from "@heroicons/react/solid";
 
-export default function Home() {
+const financial = () => {
   const router = useRouter();
+  const gridRef = useRef();
+  const [rowData, setRowData] = useState();
+  const [success, setSuccess] = useState();
 
-  const [record, setRecord] = useState({
-    name: "",
-    party: "",
-    age: 18,
-    isAdded: false,
-  });
+  const [columnDefs, setColumnDefs] = useState([
+    { field: "date" },
+    { field: "eventName" },
+    { field: "totalAmount" },
+    {
+      field: "eventID",
+      headerName: "View Details",
+      cellRenderer: function (params) {
+        return (
+          <button
+            type="submit"
+            style={{ width: "100%", height: "100%", margin: 0 }}
+            className="w-full text-white bg-gold hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            View
+          </button>
+        );
+      },
+      onCellClicked: (params) => {
+        router.push(`details/${params.value}`);
+      },
+    },
+    {
+      field: "$id",
+      headerName: "Delete",
+      cellRenderer: function (params) {
+        return (
+          <button
+            type="submit"
+            style={{ width: "100%", height: "100%", margin: 0 }}
+            className="w-full text-white bg-red hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            <TrashIcon />
+          </button>
+        );
+      },
+      onCellClicked: async (params) => {
+        try {
+          await deleteRecordsInDatabase("record", params.value);
+          await deleteRecordsInDatabase("details", params.value);
+          setSuccess(true, () => {});
+          setTimeout(() => {
+            setSuccess("over");
+            router.reload(window.location.pathname);
+          }, 2000);
+        } catch (err) {
+          setSuccess(false);
+        }
+      },
+    },
+  ]);
 
-  const contractAddress =
-    process.env.NEXT_PUBLIC_CANDIDATE_SMART_CONTRACT_ADDRESS;
+  const defaultColDef = useMemo(() => ({
+    enableCellChangeFlash: true,
+    sortable: true,
+    filter: true,
+    pagination: true,
+  }));
 
-  const { address } = useAccount();
+  const onGridReady = useCallback((params) => {
+    params.api.sizeColumnsToFit();
+    set;
+    listRecordsInDatabase(0)
+      .then((result) => result.documents)
+      .then((rowData) => setRowData(rowData));
+  }, []);
 
-  // TODO: Fix this error, contract throws error that owner and calling address doesn't match. Move this component to a general add/remove component where admin can see these candidates and get details.
-  //   if (
-  //     address === process.env.NEXT_PUBLIC_OWNER_ADDRESS &&
-  //     address === "0x168a40fa5495Ff7F92fCEb743A10984E409bb444"
-  //   ) {
-  //     const { data, isError, isLoading } = useContractRead({
-  //       address: contractAddress,
-  //       abi: abiArray,
-  //       functionName: "getDataOfCandidate",
-  //       args: ["0x379f7dEBf9495D8DE278A4A45A401F27f38564B7"],
-  //       enabled: true,
-  //     });
-  //     console.log(data);
-  //   }
-
-  const handleBackButton = () => {
-    router.back();
+  const onBtExport = () => {
+    gridRef.current.api.exportDataAsExcel();
   };
 
-  const handleChange = (event) => {
-    const { value, name } = event.target;
-    setRecord((prevState) => ({ ...prevState, [name]: value }));
-  };
-
-  const handleAddRecord = (e) => {
-    e.preventDefault();
-    // TODO: Write to contract with these values
+  const handleAddRecord = () => {
+    const uid = new ShortUniqueId({ length: 10 });
+    router.push(`add/${uid()}`);
   };
 
   return (
-    <div className="p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 w-full flex flex-col">
-      <div className="m-4 space-x-2">
+    <div className="justify-center items-center text-center gap-8 flex flex-row">
+      <div className="flex flex-col gap-8">
         <button
-          onClick={handleBackButton}
-          className="mr-4 text-white bg-red hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          onClick={handleAddRecord}
+          className="px-6 py-2.5 bg-green text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
         >
-          Back
+          Add record
+        </button>
+        <button
+          onClick={onBtExport}
+          className="px-6 py-2.5 bg-gold text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+        >
+          Export
         </button>
       </div>
-      <span className="mb-2 text-2xl font-semi tracking-tight text-center text-gold dark:text-black">
-        Add candidates
-      </span>
-      <form className="space-y-8 divide-y divide-gray-200">
-        <div className="p-6 bg-gold text-white rounded-lg border border-gold shadow-md dark:bg-gray-800 dark:border-gray-700 w-full">
-          <div className="space-y-8 divide-y divide-gray-200 justify-center items-center text-center">
-            <div className="mt-6 grid lg:grid-cols-12 gap-y-6 gap-x-4 sm:grid-cols-12">
-              <div className="sm:col-span-12 lg:col-span-4">
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Name
-                </label>
-                <div className="mt-1 flex rounded-md shadow-sm">
-                  <input
-                    onChange={handleChange}
-                    style={{ color: "black" }}
-                    value={record.eventName}
-                    type="text"
-                    name="name"
-                    autoComplete="name"
-                    className="flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
-                  />
-                </div>
-              </div>
-              <div className="sm:col-span-12 lg:col-span-4">
-                <label
-                  htmlFor="party"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Party
-                </label>
-                <div className="mt-1 flex rounded-md shadow-sm">
-                  <input
-                    onChange={handleChange}
-                    style={{ color: "black" }}
-                    value={record.eventName}
-                    type="text"
-                    name="party"
-                    autoComplete="party"
-                    className="flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
-                  />
-                </div>
-              </div>
-              <div className="sm:col-span-12 lg:col-span-4">
-                <label
-                  htmlFor="age"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Age
-                </label>
-                <div className="mt-1 flex rounded-md shadow-sm">
-                  <input
-                    onChange={handleChange}
-                    style={{ color: "black" }}
-                    value={record.eventName}
-                    type="number"
-                    name="age"
-                    autoComplete="age"
-                    className="flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
-                  />
-                </div>
-              </div>
-            </div>
-            <button
-              onClick={handleAddRecord}
-              type="submit"
-              className="text-white bg-green hover:bg-blue-800 focus:ring-4 focus:outline-none font-bold rounded-lg text-sm w-1/4 px-5 py-2.5 text-center"
-            >
-              Add
-            </button>
-          </div>
-        </div>
-      </form>
+      <div className="ag-theme-alpine" style={{ width: 500, height: 500 }}>
+        <h5 className="mb-5 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+          Event Records
+        </h5>
+
+        <AgGridReact
+          className="mt-10"
+          ref={gridRef}
+          rowData={rowData}
+          columnDefs={columnDefs}
+          defaultColDef={defaultColDef}
+          animateRows={true}
+          rowSelection="multiple"
+          onGridReady={onGridReady}
+        />
+      </div>
     </div>
   );
-}
+};
+
+export default financial;
