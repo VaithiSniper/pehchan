@@ -1,18 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
-import { useContractEvent } from "wagmi";
-
-import sampleAbiArray from "../../contracts/sampleAbiArray";
-import * as PushAPI from "@pushprotocol/restapi";
-import * as ethers from "ethers";
 import Card from "../../components/card";
-import {
-  useAccount,
-  useDisconnect,
-  useEnsAvatar,
-  useEnsName,
-  useContractRead,
-} from "wagmi";
+import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from "wagmi";
 import Image from "next/image";
 import { Tooltip } from "react-tooltip";
 import Link from "../../components/link";
@@ -33,49 +22,6 @@ const Dashboard = () => {
     if (address) setTooltipState(address);
     else router.push("/login");
   }, [tooltipState]);
-
-  const PK = "73eaaf6c0a8122388b46c2c1a4e1b922a0a9186c32f8c7cf580293af6a674f92"; // channel private key
-  const Pkey = `0x${PK}`;
-  const signer = new ethers.Wallet(Pkey);
-
-  const sendNotification = async () => {
-    try {
-      // apiResponse?.status === 204, if sent successfully!
-      const apiResponse = await PushAPI.payloads.sendNotification({
-        signer,
-        type: 1, // broadcast
-        identityType: 2, // direct payload
-        notification: {
-          title: `Hello there`,
-          body: `lorem ipsum dolor sit amet `,
-        },
-        payload: {
-          title: `Hello there`,
-          body: `lorem ipsum dolor sit amet`,
-          cta: "",
-          img: "",
-        },
-        channel: "eip155:5:0x168a40fa5495Ff7F92fCEb743A10984E409bb444", // your channel address
-        env: "staging",
-      });
-
-      // apiResponse?.status === 204, if sent successfully!
-      console.log("API repsonse: ", apiResponse);
-    } catch (err) {
-      console.error("Error: ", err);
-    }
-  };
-
-  useContractEvent({
-    address: process.env.NEXT_PUBLIC_SAMPLE_SMART_CONTRACT_ADDRESS, // change contract address
-    abi: sampleAbiArray,
-    eventName: "TokensReceived",
-    listener(node, label, owner) {
-      console.log(node, label, owner);
-      sendNotification();
-    },
-  });
-
   // setTooltipState("Your address is : " + "34");
   return (
     <div className="justify-center items-center text-center gap-8 flex flex-row">
@@ -113,7 +59,7 @@ const Dashboard = () => {
         </div>
         <div className="my-4">
           <p className="text-4xl sm:text-4xl text-gray-700 font-semibold font-heading dark:text-white py-4 inline px-4">
-            Welcome {ensName ? ensName : "User"}
+            Welcome {ensName ? ensName : "Admin"}
           </p>
           <Image
             height={30}
@@ -131,15 +77,12 @@ const Dashboard = () => {
             What do you want to do?
           </h3>
         </>
-        <div className="text-md text-gray-500 dark:text-gray-300 pa-4 space-x-8 flex flex-row font-space">
-          <>
-            <Card title="Ongoing elections" text="Vote" path="action/vote" />
-          </>
+        <div className="text-md text-gray-500 dark:text-gray-300 pa-4 space-x-8 flex flex-row font-space justify-center items-center text-center">
           <>
             <Card
-              title="View previous elections"
-              text="View"
-              path="action/view"
+              title="Manage Candidates"
+              text="Go"
+              path="candidate/actions"
             />
           </>
         </div>

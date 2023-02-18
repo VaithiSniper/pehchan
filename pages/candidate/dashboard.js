@@ -1,8 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
-import { useContractEvent } from "wagmi";
-
-import sampleAbiArray from "../../contracts/sampleAbiArray";
+import abiArray from "../../contracts/candidateAbiArray";
 import * as PushAPI from "@pushprotocol/restapi";
 import * as ethers from "ethers";
 import Card from "../../components/card";
@@ -16,6 +14,16 @@ import {
 import Image from "next/image";
 import { Tooltip } from "react-tooltip";
 import Link from "../../components/link";
+
+function stat(n) {
+  return n > 0
+    ? n == 1
+      ? "In_Review"
+      : n == 2
+      ? "KYC_Pending"
+      : "Approved"
+    : "initalDefault";
+}
 
 const Dashboard = () => {
   //setup router object
@@ -34,49 +42,21 @@ const Dashboard = () => {
     else router.push("/login");
   }, [tooltipState]);
 
-  const PK = "73eaaf6c0a8122388b46c2c1a4e1b922a0a9186c32f8c7cf580293af6a674f92"; // channel private key
-  const Pkey = `0x${PK}`;
-  const signer = new ethers.Wallet(Pkey);
+  const contractAddress = "0xEc0b043C4FbEE32A0c486b727980C6bfb0FFfDEA";
+  const contractAbi = new ethers.utils.Interface(abiArray);
 
-  const sendNotification = async () => {
-    try {
-      // apiResponse?.status === 204, if sent successfully!
-      const apiResponse = await PushAPI.payloads.sendNotification({
-        signer,
-        type: 1, // broadcast
-        identityType: 2, // direct payload
-        notification: {
-          title: `Hello there`,
-          body: `lorem ipsum dolor sit amet `,
-        },
-        payload: {
-          title: `Hello there`,
-          body: `lorem ipsum dolor sit amet`,
-          cta: "",
-          img: "",
-        },
-        channel: "eip155:5:0x168a40fa5495Ff7F92fCEb743A10984E409bb444", // your channel address
-        env: "staging",
-      });
+  let status = 0;
+  if (address != null) {
+    const { data, isError, isLoading, error } = useContractRead({
+      address: contractAddress,
+      abi: contractAbi,
+      functionName: "getStatusOfCandidate",
+      args: [address],
+    });
+    console.log(data);
+    if (data) status = stat(data[1]);
+  }
 
-      // apiResponse?.status === 204, if sent successfully!
-      console.log("API repsonse: ", apiResponse);
-    } catch (err) {
-      console.error("Error: ", err);
-    }
-  };
-
-  useContractEvent({
-    address: process.env.NEXT_PUBLIC_SAMPLE_SMART_CONTRACT_ADDRESS, // change contract address
-    abi: sampleAbiArray,
-    eventName: "TokensReceived",
-    listener(node, label, owner) {
-      console.log(node, label, owner);
-      sendNotification();
-    },
-  });
-
-  // setTooltipState("Your address is : " + "34");
   return (
     <div className="justify-center items-center text-center gap-8 flex flex-row">
       <div className="w-full sm:w-1/2 md:w-1/2 lg:w-4/5 px-4 py-4 bg-grey mt-6 shadow-lg rounded-lg dark:bg-gray-800">
@@ -131,18 +111,35 @@ const Dashboard = () => {
             What do you want to do?
           </h3>
         </>
-        <div className="text-md text-gray-500 dark:text-gray-300 pa-4 space-x-8 flex flex-row font-space">
-          <>
-            <Card title="Ongoing elections" text="Vote" path="action/vote" />
-          </>
-          <>
-            <Card
-              title="View previous elections"
-              text="View"
-              path="action/view"
-            />
-          </>
-        </div>
+        {status == "initalDefault" ? (
+          <div className="text-md text-gray-500 dark:text-gray-300 pa-4 space-x-8 flex flex-row font-space justify-center items-center text-center">
+            <>
+              <Card
+                title="Fill in your apllication"
+                text="Apply"
+                path="/candidate/application"
+              />
+            </>
+          </div>
+        ) : status == "In_Review" ? (
+          <div className="text-md text-gray-500 dark:text-gray-300 pa-4 space-x-8 flex flex-row font-space justify-center items-center text-center">
+            <>
+              <Card title="Your application is in review" />
+            </>
+          </div>
+        ) : status == "KYC_Pending" ? (
+          <div className="text-md text-gray-500 dark:text-gray-300 pa-4 space-x-8 flex flex-row font-space justify-center items-center text-center">
+            <>
+              <Card title="Your KYC is pending" />
+            </>
+          </div>
+        ) : status == "Approved" ? (
+          <div className="text-md text-gray-500 dark:text-gray-300 pa-4 space-x-8 flex flex-row font-space justify-center items-center text-center">
+            <>
+              <Card title="Your application has been approved!" />
+            </>
+          </div>
+        ) : null}
       </div>
     </div>
   );
