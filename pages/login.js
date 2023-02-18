@@ -30,7 +30,7 @@ export default function Login() {
       console.log(isConnected ? "Connected" : "Not connected");
       // Modify dashboard component and put that route here
       const ownerAddress = process.env.NEXT_PUBLIC_OWNER_ADDRESS;
-      if (ownerAddress == address) router.push("/candidate/dashboard");
+      if (ownerAddress === address) router.push("/candidate/dashboard");
       else router.push("/user/dashboard");
     }
   }, [address]);
