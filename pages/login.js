@@ -14,6 +14,8 @@ export default function Login() {
 
   const [addressState, setAddressState] = useState(null);
 
+  const [type, setType] = useState("voter");
+
   const { connector, address, isConnected } = useAccount();
   const { connect, connectors, error, isLoading, pendingConnector } =
     useConnect();
@@ -30,7 +32,7 @@ export default function Login() {
       console.log(isConnected ? "Connected" : "Not connected");
       // Modify dashboard component and put that route here
       const ownerAddress = process.env.NEXT_PUBLIC_OWNER_ADDRESS;
-      if (ownerAddress === address) router.push("/candidate/dashboard");
+      if (type === "candidate") router.push("/candidate/dashboard");
       else router.push("/user/dashboard");
     }
   }, [address]);
@@ -39,8 +41,48 @@ export default function Login() {
     <div className="flex flex-col justify-center space-y-8 items-center">
       <div className="max-w-sm rounded overflow-hidden shadow-lg bg-gold">
         <div className="px-6 py-4 flex flex-col justify-center relative">
-          <div className="container font-bold font-space text-xl mb-2 flex flex-col items-center py-3">
+          <div className="container font-bold font-space text-4xl mb-2 flex flex-col items-center py-3">
             <span>Login </span>
+
+            <div class="flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700">
+              <div class="px-6 flex items-center">
+                <input
+                  id="bordered-radio-1"
+                  type="radio"
+                  value="candidate"
+                  name="type"
+                  onChange={(e) => {
+                    setType(e.target.value);
+                  }}
+                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                />
+                <label
+                  for="bordered-radio-1"
+                  class="w-full py-4 px-3 ml-2 text-sm font-big text-gray-900 dark:text-gray-300"
+                >
+                  Candidate
+                </label>
+              </div>
+              <div class="px-6 flex items-center">
+                <input
+                  checked
+                  id="bordered-radio-2"
+                  type="radio"
+                  value="voter"
+                  name="type"
+                  onChange={(e) => {
+                    setType(e.target.value);
+                  }}
+                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                />
+                <label
+                  for="bordered-radio-2"
+                  class="w-full py-4 px-3 ml-3 text-sm font-big text-gray-900 dark:text-gray-300"
+                >
+                  Voter
+                </label>
+              </div>
+            </div>
           </div>
           {!isConnected &&
             connectors.map((connector) => (
