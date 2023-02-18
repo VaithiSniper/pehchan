@@ -24,7 +24,7 @@ export default function Home() {
 
   const [signer, setSigner] = useState();
 
-  const contractAddress = "0x8845365da8bA86e7e2A6876a12ecaE798f3ccdEe";
+  const contractAddress = "0x428c69605fb111F395663108097A1AAa7A613Bd4";
   const contractAbi = new ethers.utils.Interface(abiArray);
 
   const { address } = useAccount();

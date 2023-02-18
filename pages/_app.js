@@ -43,6 +43,16 @@ const { chains, provider, webSocketProvider } = configureChains(chainList, [
       http: `https://goerli.blockpi.network/v1/rpc/public`,
     }),
   }),
+  jsonRpcProvider({
+    rpc: () => ({
+      http: `https://rpc.ankr.com/polygon_mumbai`,
+    }),
+  }),
+  jsonRpcProvider({
+    rpc: () => ({
+      http: `https://filecoin-hyperspace.chainstacklabs.com/rpc/v1`,
+    }),
+  }),
   publicProvider(),
 ]);
 
