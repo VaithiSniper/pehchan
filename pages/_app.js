@@ -55,8 +55,6 @@ const wagmiClient = createClient({
 function MyApp({ Component, pageProps }) {
   const title = "Pehchan";
 
-  useContractEvent(candidateRecieved);
-
   return (
     <WagmiConfig client={wagmiClient}>
       <Layout title={title}>

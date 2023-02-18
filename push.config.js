@@ -4,41 +4,39 @@ import * as PushAPI from "@pushprotocol/restapi";
 import * as ethers from "ethers";
 import { useAccount } from "wagmi";
 //---------------------- Setup ----------------------
-const PK =
-  process.env.NEXT_PUBLIC_OWNER_PRIVATE_KEY ||
-  "73eaaf6c0a8122388b46c2c1a4e1b922a0a9186c32f8c7cf580293af6a674f92"; // channel private key
+const PK = "73eaaf6c0a8122388b46c2c1a4e1b922a0a9186c32f8c7cf580293af6a674f92"; // channel private key
 const Pkey = `0x${PK}`;
-console.log("Pkey: ", Pkey);
+// console.log("Pkey: ", Pkey);
 const signer = new ethers.Wallet(Pkey);
 
 //---------------------- Notifications ----------------------
 
-const candidateUpdateNotification = async () => {
+const candidateUpdateNotification = async (owner) => {
   try {
     // apiResponse?.status === 204, if sent successfully!
     const { address } = useAccount();
-    reciepient_address = "eip155:" + address;
+    const recipientadress = "eip155:5:" + address;
     const apiResponse = await PushAPI.payloads.sendNotification({
       signer,
-      type: 3, // broadcast
+      type: 3, // unicast
       identityType: 2, // direct payload
       notification: {
-        title: `Candidate Updated`,
-        body: `Updating candidate details`,
+        title: `Application Status`,
+        body: `Application status has been moved`,
       },
       payload: {
-        title: `Candidate details updated`,
-        body: `Your candidate details have been updated `,
+        title: `Application status has been moved`,
+        body: `Your application status is: {wah}`,
         cta: "",
         img: "",
       },
-      recipients: reciepient_address,
-      channel: "eip155:0x168a40fa5495Ff7F92fCEb743A10984E409bb444", // your channel address
+      recipients: recipientadress, // recipient address
+      channel: "eip155:5:0x168a40fa5495Ff7F92fCEb743A10984E409bb444", // your channel address
       env: "staging",
     });
 
     // apiResponse?.status === 204, if sent successfully!
-    console.log("API repsonse: ", apiResponse);
+    // console.log("API repsonse: ", apiResponse);
   } catch (err) {
     console.error("Error: ", err);
   }
@@ -51,8 +49,7 @@ const candidateRecieved = {
   abi: abiArray,
   eventName: "candidateStatus",
   listener(node, label, owner) {
-    console.log(node, label, owner);
-    candidateUpdateNotification();
+    candidateUpdateNotification(owner);
   },
 };
 
