@@ -1,41 +1,9 @@
-const abiArray = [
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "address",
-        name: "candidateAddress",
-        type: "address",
-      },
-    ],
-    name: "candidateRemoved",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "address",
-        name: "candidateAddress",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "enum Candidate.applicationStatus",
-        name: "",
-        type: "uint8",
-      },
-    ],
-    name: "candidateStatus",
-    type: "event",
-  },
+const voterAbiArray = [
   {
     inputs: [
       {
         internalType: "address",
-        name: "_candidateAddress",
+        name: "_voterAddress",
         type: "address",
       },
       {
@@ -44,17 +12,17 @@ const abiArray = [
         type: "string",
       },
       {
-        internalType: "string",
-        name: "_party",
-        type: "string",
-      },
-      {
         internalType: "uint8",
         name: "_age",
         type: "uint8",
       },
+      {
+        internalType: "uint256",
+        name: "_ccode",
+        type: "uint256",
+      },
     ],
-    name: "addCandidate",
+    name: "addVoter",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -63,24 +31,11 @@ const abiArray = [
     inputs: [
       {
         internalType: "address",
-        name: "_candidateAddress",
+        name: "_voterAddress",
         type: "address",
       },
     ],
-    name: "removeCandidate",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_candidateAddress",
-        type: "address",
-      },
-    ],
-    name: "upgradeCandidate",
+    name: "removeVoter",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -91,21 +46,53 @@ const abiArray = [
     type: "constructor",
   },
   {
-    inputs: [],
-    name: "candidatesCount",
-    outputs: [
+    inputs: [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
+        internalType: "address",
+        name: "_voterAddress",
+        type: "address",
       },
     ],
-    stateMutability: "view",
+    name: "upgradeCandidate",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "voterAddress",
+        type: "address",
+      },
+    ],
+    name: "voterRemoved",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "voterAddress",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "enum Voter.applicationStatus",
+        name: "",
+        type: "uint8",
+      },
+    ],
+    name: "voterStatus",
+    type: "event",
+  },
+  {
     inputs: [],
-    name: "getDataOfAllCandidates",
+    name: "getDataOfAllVoters",
     outputs: [
       {
         components: [
@@ -115,27 +102,27 @@ const abiArray = [
             type: "string",
           },
           {
-            internalType: "string",
-            name: "party",
-            type: "string",
-          },
-          {
             internalType: "uint256",
             name: "age",
             type: "uint256",
           },
           {
             internalType: "address",
-            name: "candidateAddress",
+            name: "voterAddress",
             type: "address",
           },
           {
-            internalType: "enum Candidate.applicationStatus",
+            internalType: "enum Voter.applicationStatus",
             name: "status",
             type: "uint8",
           },
+          {
+            internalType: "uint256",
+            name: "ccode",
+            type: "uint256",
+          },
         ],
-        internalType: "struct Candidate.candidateMetadata[]",
+        internalType: "struct Voter.voterMetaData[]",
         name: "",
         type: "tuple[]",
       },
@@ -147,11 +134,11 @@ const abiArray = [
     inputs: [
       {
         internalType: "address",
-        name: "_candidateAddress",
+        name: "_voterAddress",
         type: "address",
       },
     ],
-    name: "getDataOfCandidate",
+    name: "getDataOfVoter",
     outputs: [
       {
         internalType: "address",
@@ -166,27 +153,27 @@ const abiArray = [
             type: "string",
           },
           {
-            internalType: "string",
-            name: "party",
-            type: "string",
-          },
-          {
             internalType: "uint256",
             name: "age",
             type: "uint256",
           },
           {
             internalType: "address",
-            name: "candidateAddress",
+            name: "voterAddress",
             type: "address",
           },
           {
-            internalType: "enum Candidate.applicationStatus",
+            internalType: "enum Voter.applicationStatus",
             name: "status",
             type: "uint8",
           },
+          {
+            internalType: "uint256",
+            name: "ccode",
+            type: "uint256",
+          },
         ],
-        internalType: "struct Candidate.candidateMetadata",
+        internalType: "struct Voter.voterMetaData",
         name: "",
         type: "tuple",
       },
@@ -198,11 +185,11 @@ const abiArray = [
     inputs: [
       {
         internalType: "address",
-        name: "_candidateAddress",
+        name: "_voterAddress",
         type: "address",
       },
     ],
-    name: "getStatusOfCandidate",
+    name: "getStatusOfVoter",
     outputs: [
       {
         internalType: "address",
@@ -210,7 +197,7 @@ const abiArray = [
         type: "address",
       },
       {
-        internalType: "enum Candidate.applicationStatus",
+        internalType: "enum Voter.applicationStatus",
         name: "",
         type: "uint8",
       },
@@ -220,7 +207,7 @@ const abiArray = [
   },
   {
     inputs: [],
-    name: "isMetatdataArrayEmpty",
+    name: "isMetadataArrayEmpty",
     outputs: [
       {
         internalType: "bool",
@@ -244,6 +231,19 @@ const abiArray = [
     stateMutability: "view",
     type: "function",
   },
+  {
+    inputs: [],
+    name: "voterCount",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
 ];
 
-export default abiArray;
+export default voterAbiArray;
