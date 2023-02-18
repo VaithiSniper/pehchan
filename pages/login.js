@@ -3,14 +3,10 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import Metamask from "../components/metamask";
 import { useAccount, useConnect } from "wagmi";
-import { InjectedConnector } from "wagmi/connectors/injected";
 import { useEffect } from "react";
-import { useAccount, useConnect } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
 import Image from "next/image";
-
-import { useEffect } from "react";
 import Toast from "../components/toast";
 
 export default function Login() {

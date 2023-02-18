@@ -1,8 +1,8 @@
 //---------------------- Imports ----------------------
-import sampleAbiArray from "./contracts/sampleAbiArray";
+import abiArray from "./contracts/candidateAbiArray";
 import * as PushAPI from "@pushprotocol/restapi";
 import * as ethers from "ethers";
-
+import { useAccount } from "wagmi";
 //---------------------- Setup ----------------------
 const PK =
   process.env.NEXT_PUBLIC_OWNER_PRIVATE_KEY ||
@@ -13,24 +13,27 @@ const signer = new ethers.Wallet(Pkey);
 
 //---------------------- Notifications ----------------------
 
-const sendTokensReceivedNotification = async () => {
+const candidateUpdateNotification = async () => {
   try {
     // apiResponse?.status === 204, if sent successfully!
+    const { address } = useAccount();
+    reciepient_address = "eip155:" + address;
     const apiResponse = await PushAPI.payloads.sendNotification({
       signer,
-      type: 1, // broadcast
+      type: 3, // broadcast
       identityType: 2, // direct payload
       notification: {
-        title: `Tokens sent`,
-        body: `Tokens sent`,
+        title: `Candidate Updated`,
+        body: `Updating candidate details`,
       },
       payload: {
-        title: `Tokens sent`,
-        body: `Tokens sent`,
+        title: `Candidate details updated`,
+        body: `Your candidate details have been updated `,
         cta: "",
         img: "",
       },
-      channel: process.env.NEXT_PUBLIC_PUSH_PARTICIPANTS, // your channel address
+      recipients: reciepient_address,
+      channel: "eip155:0x168a40fa5495Ff7F92fCEb743A10984E409bb444", // your channel address
       env: "staging",
     });
 
@@ -43,15 +46,15 @@ const sendTokensReceivedNotification = async () => {
 
 //---------------------- Events ----------------------
 
-const TokensReceived = {
-  address: process.env.NEXT_PUBLIC_SAMPLE_SMART_CONTRACT_ADDRESS, // change contract address
-  abi: sampleAbiArray,
-  eventName: "TokensReceived",
+const candidateRecieved = {
+  address: "0x8845365da8bA86e7e2A6876a12ecaE798f3ccdEe", // change contract address
+  abi: abiArray,
+  eventName: "candidateStatus",
   listener(node, label, owner) {
     console.log(node, label, owner);
-    sendNotification();
+    candidateUpdateNotification();
   },
 };
 
 //---------------------- Exports ----------------------
-export { sendTokensReceivedNotification, TokensReceived };
+export { candidateUpdateNotification, candidateRecieved };
