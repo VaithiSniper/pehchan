@@ -1,8 +1,13 @@
 import "../styles/globals.css";
-import styles from "../styles/Home.module.css";
 import Layout from "../components/layout";
 
-import { configureChains, WagmiConfig, createClient, Chain } from "wagmi";
+import {
+  configureChains,
+  useContractEvent,
+  WagmiConfig,
+  createClient,
+  Chain,
+} from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 import { ArcanaConnector } from "@arcana/auth-wagmi";
@@ -16,7 +21,7 @@ import {
 import styles from "../styles/Home.module.css";
 import "react-tooltip/dist/react-tooltip.css";
 
-// import { sendTokensReceivedNotification, TokensReceived } from "../push.config";
+import { candidateRecieved, candidateUpdateNotification } from "../push.config";
 
 const connector = () => {
   return new ArcanaConnector({
@@ -49,6 +54,8 @@ const wagmiClient = createClient({
 
 function MyApp({ Component, pageProps }) {
   const title = "Pehchan";
+
+  useContractEvent(candidateRecieved);
 
   return (
     <WagmiConfig client={wagmiClient}>
