@@ -5,25 +5,22 @@ import React, {
   useCallback,
   useEffect,
 } from "react";
-import Head from "next/head";
 import abiArray from "../../../contracts/candidateAbiArray";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { useRouter } from "next/router";
-import ShortUniqueId from "short-unique-id";
 import { TrashIcon } from "@heroicons/react/solid";
 import { ArrowUpIcon } from "@heroicons/react/outline";
 import {
-  useContract,
   useContractRead,
   useAccount,
-  useSigner,
-  useProvider,
   usePrepareContractWrite,
   useContractWrite,
+  useContractEvent,
 } from "wagmi";
-import { ethers, signer } from "ethers";
+import { ethers } from "ethers";
+import { candidateRecieved } from "../../../push.config";
 
 const contractAddress =
   process.env.NEXT_PUBLIC_CANDIDATE_SMART_CONTRACT_ADDRESS;
@@ -47,8 +44,9 @@ const financial = () => {
     address: contractAddress,
     abi: abiArray,
     functionName: "upgradeCandidate",
-    args: [address],
+    args: ["0x168a40fa5495Ff7F92fCEb743A10984E409bb444"],
   });
+  useContractEvent(candidateRecieved);
 
   let dataArr;
   if (address != null) {
@@ -58,7 +56,6 @@ const financial = () => {
       functionName: "getDataOfAllCandidates",
       select: (data) =>
         data
-          .slice(0, 3)
           .map((dataItems, index) => ({
             Name: dataItems[0],
             Party: dataItems[1],
@@ -70,11 +67,14 @@ const financial = () => {
           .filter((dataItem) => dataItem.Name !== "" && dataItem.Party !== ""),
     });
     dataArr = data;
+    console.log(data, error);
   }
 
   // TODO: Implement The Graph
   useEffect(() => {
-    if (config.args[0] !== address) writeRes.write?.();
+    console.log(config);
+    if (config.args[0] !== "0x168a40fa5495Ff7F92fCEb743A10984E409bb444")
+      writeRes.write?.();
   }, [config]);
 
   let configRes, writeRes;
