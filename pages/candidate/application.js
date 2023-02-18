@@ -1,13 +1,15 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import abiArray from "../../../contracts/candidateAbiArray";
+import abiArray from "../../contracts/candidateAbiArray";
 import {
   useContract,
   useContractRead,
   useAccount,
   useSigner,
   useProvider,
+  useContractWrite,
+  usePrepareContractWrite,
 } from "wagmi";
 import { ethers, signer } from "ethers";
 
@@ -35,23 +37,13 @@ export default function Home() {
     },
   });
 
-  console.log(contractAddress);
-
-  const { data, isError, isLoading, error } = useContractRead({
+  const { config, error } = usePrepareContractWrite({
     address: contractAddress,
-    abi: contractAbi,
-    functionName: "getDataOfCandidate",
-    args: ["0x379f7debf9495d8de278a4a45a401f27f38564b7"],
+    abi: abiArray,
+    functionName: "addCandidate",
+    args: [address, record.name, record.party, Number(record.age)],
   });
-
-  //   const { data, isError, isLoading, error } = useContractRead({
-  //     address: contractAddress,
-  //     abi: abiArray,
-  //     functionName: "getStatusOfCandidate",
-  //     args: ["0x379f7dEBf9495D8DE278A4A45A401F27f38564B7"],
-  //     signerOrProvider: signer,
-  //   });
-  console.log(data, isError, error);
+  const { data, isLoading, isSuccess, write } = useContractWrite(config);
 
   // if (signer !== null) {
   //   const wallet = new ethers.Wallet(
@@ -96,7 +88,7 @@ export default function Home() {
 
   const handleAddRecord = (e) => {
     e.preventDefault();
-    console.log(record);
+    write?.();
     // TODO: Write to contract with these values
   };
 
@@ -111,7 +103,7 @@ export default function Home() {
         </button>
       </div>
       <span className="mb-2 text-2xl font-semi tracking-tight text-center text-gold dark:text-black">
-        Add candidates
+        Enter your information
       </span>
       <form className="space-y-8 divide-y divide-gray-200">
         <div className="p-6 bg-gold text-white rounded-lg border border-gold shadow-md dark:bg-gray-800 dark:border-gray-700 w-full">
@@ -174,13 +166,25 @@ export default function Home() {
                   />
                 </div>
               </div>
+
+              <div className="sm:col-span-12 lg:col-span-4">
+                <label
+                  htmlFor="aadharfile"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Upload Aadhar Card
+                </label>
+                <div className="block w-full text-sm text-slate-500 border-2 border-white p-2">
+                  <input type="file" name="myAadhar" onChange={handleChange} />
+                </div>
+              </div>
             </div>
             <button
               onClick={handleAddRecord}
               type="submit"
               className="text-white bg-green hover:bg-blue-800 focus:ring-4 focus:outline-none font-bold rounded-lg text-sm w-1/4 px-5 py-2.5 text-center"
             >
-              Add
+              Save
             </button>
           </div>
         </div>
