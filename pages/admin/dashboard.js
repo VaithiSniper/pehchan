@@ -79,10 +79,11 @@ const Dashboard = () => {
         </>
         <div className="text-md text-gray-500 dark:text-gray-300 pa-4 space-x-8 flex flex-row font-space justify-center items-center text-center">
           <>
-            <Card title="Add Candidates" text="Go" path="candidate/add" />
-          </>
-          <>
-            <Card title="Remove Candidates" text="Go" path="candidate/remove" />
+            <Card
+              title="Manage Candidates"
+              text="Go"
+              path="candidate/actions"
+            />
           </>
         </div>
       </div>
