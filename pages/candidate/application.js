@@ -24,7 +24,7 @@ export default function Home() {
 
   const [signer, setSigner] = useState();
 
-  const contractAddress = "0xEc0b043C4FbEE32A0c486b727980C6bfb0FFfDEA";
+  const contractAddress = "0x8845365da8bA86e7e2A6876a12ecaE798f3ccdEe";
   const contractAbi = new ethers.utils.Interface(abiArray);
 
   const { address } = useAccount();
@@ -164,18 +164,6 @@ export default function Home() {
                     autoComplete="age"
                     className="flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                   />
-                </div>
-              </div>
-
-              <div className="sm:col-span-12 lg:col-span-4">
-                <label
-                  htmlFor="aadharfile"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Upload Aadhar Card
-                </label>
-                <div className="block w-full text-sm text-slate-500 border-2 border-white p-2">
-                  <input type="file" name="myAadhar" onChange={handleChange} />
                 </div>
               </div>
             </div>

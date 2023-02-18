@@ -73,11 +73,6 @@ const abiArray = [
     type: "function",
   },
   {
-    inputs: [],
-    stateMutability: "nonpayable",
-    type: "constructor",
-  },
-  {
     inputs: [
       {
         internalType: "address",
@@ -91,33 +86,9 @@ const abiArray = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    name: "candidateMetadataArray",
-    outputs: [
-      {
-        internalType: "string",
-        name: "name",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "party",
-        type: "string",
-      },
-      {
-        internalType: "uint256",
-        name: "age",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
+    inputs: [],
+    stateMutability: "nonpayable",
+    type: "constructor",
   },
   {
     inputs: [],
@@ -127,6 +98,46 @@ const abiArray = [
         internalType: "uint256",
         name: "",
         type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getDataOfAllCandidates",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "string",
+            name: "name",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "party",
+            type: "string",
+          },
+          {
+            internalType: "uint256",
+            name: "age",
+            type: "uint256",
+          },
+          {
+            internalType: "address",
+            name: "candidateAddress",
+            type: "address",
+          },
+          {
+            internalType: "enum Candidate.applicationStatus",
+            name: "status",
+            type: "uint8",
+          },
+        ],
+        internalType: "struct Candidate.candidateMetadata[]",
+        name: "",
+        type: "tuple[]",
       },
     ],
     stateMutability: "view",
@@ -164,6 +175,16 @@ const abiArray = [
             name: "age",
             type: "uint256",
           },
+          {
+            internalType: "address",
+            name: "candidateAddress",
+            type: "address",
+          },
+          {
+            internalType: "enum Candidate.applicationStatus",
+            name: "status",
+            type: "uint8",
+          },
         ],
         internalType: "struct Candidate.candidateMetadata",
         name: "",
@@ -192,6 +213,19 @@ const abiArray = [
         internalType: "enum Candidate.applicationStatus",
         name: "",
         type: "uint8",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "isMetatdataArrayEmpty",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
       },
     ],
     stateMutability: "view",
