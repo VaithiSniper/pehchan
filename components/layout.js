@@ -4,7 +4,7 @@ import styles from "../styles/Home.module.css";
 
 export default function Layout({ title, children }) {
   return (
-    <>
+    <div className="flex flex-col justify-center space-y-8 items-center">
       <div
         style={{
           backgroundColor: "black",
@@ -25,6 +25,6 @@ export default function Layout({ title, children }) {
           <Footer />
         </div>
       </div>
-    </>
-  )
+    </div>
+  );
 }
