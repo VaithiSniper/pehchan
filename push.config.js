@@ -45,7 +45,7 @@ const candidateUpdateNotification = async (owner) => {
 //---------------------- Events ----------------------
 
 const candidateRecieved = {
-  address: "0x428c69605fb111F395663108097A1AAa7A613Bd4", // change contract address
+  address: "0x38f8E2Bc7d52aFfE41FAA9d686c58EfEF833a2F0", // change contract address
   abi: abiArray,
   eventName: "candidateStatus",
   listener(node, label, owner) {

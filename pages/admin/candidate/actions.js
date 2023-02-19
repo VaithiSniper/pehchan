@@ -10,7 +10,7 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { useRouter } from "next/router";
-import { TrashIcon } from "@heroicons/react/solid";
+import { CodeIcon, TrashIcon } from "@heroicons/react/solid";
 import { ArrowUpIcon } from "@heroicons/react/outline";
 import {
   useContractRead,
@@ -48,6 +48,7 @@ const financial = () => {
   });
   useContractEvent(candidateRecieved);
 
+  console.log("Data is ", address);
   let dataArr;
   if (address != null) {
     const { data, isError, isLoading, error } = useContractRead({
@@ -62,7 +63,7 @@ const financial = () => {
             Age: Number(dataItems[2]),
             Address: dataItems[3],
             ApplicationStaus: statusFlags(dataItems[4]),
-            Constituency: Number(dataItems[5]),
+            ConstituencyCode: Number(dataItems[5]),
             CandidateID: index,
           }))
           .filter(
@@ -95,6 +96,7 @@ const financial = () => {
     { field: "Age" },
     { field: "Constituency" },
     { field: "CandidateID" },
+    { field: "ConstituencyCode" },
     {
       field: "ApplicationStaus",
       headerName: "Application Staus",
