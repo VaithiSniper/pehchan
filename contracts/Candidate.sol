@@ -18,6 +18,7 @@ contract Candidate {
         uint age;
         address candidateAddress;
         applicationStatus status;
+        uint256 ccode;
     }
 
     // keep track of owner and candidatesCount 
@@ -43,13 +44,13 @@ contract Candidate {
     //     _;
     // }
 
-    function addCandidate(address _candidateAddress, string memory _name, string memory _party, uint8 _age) public {
+    function addCandidate(address _candidateAddress, string memory _name, string memory _party, uint8 _age, uint256 _ccode) public {
         // check if application has already been sent
         require(candidates[_candidateAddress] == 0,  "This candidate has already applied");
         // first set the candidateID as value for that address in mapping
         candidates[_candidateAddress] = candidatesCount;
         // set the array's corresponding index with the candidate metadata
-        candidateMetadataArray.push(candidateMetadata(_name, _party, _age, _candidateAddress, applicationStatus.In_Review));
+        candidateMetadataArray.push(candidateMetadata(_name, _party, _age, _candidateAddress, applicationStatus.In_Review, _ccode));
         // increment the index
         candidatesCount++;
         // emit event regarding current status for push
@@ -82,6 +83,12 @@ contract Candidate {
         return (_candidateAddress, candidateMetadataArray[candidates[_candidateAddress]]);
     }
 
+    function getNameOfCandidate(address _candidateAddress) public view returns( string memory) {
+         require(candidateMetadataArray[candidates[_candidateAddress]].status != applicationStatus.initalDefault,  "This candidate doesn't exist");
+        // return candidate details
+        return (candidateMetadataArray[candidates[_candidateAddress]].name);
+    }
+    
     function getDataOfAllCandidates() public view returns(candidateMetadata[] memory) {
         // check if candidates even exist
         // require(candidateMetadataArray[0],  "This candidate doesn't exist");

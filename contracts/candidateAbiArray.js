@@ -1,5 +1,10 @@
 const abiArray = [
   {
+    inputs: [],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
     anonymous: false,
     inputs: [
       {
@@ -53,42 +58,16 @@ const abiArray = [
         name: "_age",
         type: "uint8",
       },
+      {
+        internalType: "uint256",
+        name: "_ccode",
+        type: "uint256",
+      },
     ],
     name: "addCandidate",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_candidateAddress",
-        type: "address",
-      },
-    ],
-    name: "removeCandidate",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_candidateAddress",
-        type: "address",
-      },
-    ],
-    name: "upgradeCandidate",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    stateMutability: "nonpayable",
-    type: "constructor",
   },
   {
     inputs: [],
@@ -133,6 +112,11 @@ const abiArray = [
             internalType: "enum Candidate.applicationStatus",
             name: "status",
             type: "uint8",
+          },
+          {
+            internalType: "uint256",
+            name: "ccode",
+            type: "uint256",
           },
         ],
         internalType: "struct Candidate.candidateMetadata[]",
@@ -185,10 +169,34 @@ const abiArray = [
             name: "status",
             type: "uint8",
           },
+          {
+            internalType: "uint256",
+            name: "ccode",
+            type: "uint256",
+          },
         ],
         internalType: "struct Candidate.candidateMetadata",
         name: "",
         type: "tuple",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_candidateAddress",
+        type: "address",
+      },
+    ],
+    name: "getNameOfCandidate",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
       },
     ],
     stateMutability: "view",
@@ -242,6 +250,32 @@ const abiArray = [
       },
     ],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_candidateAddress",
+        type: "address",
+      },
+    ],
+    name: "removeCandidate",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_candidateAddress",
+        type: "address",
+      },
+    ],
+    name: "upgradeCandidate",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
 ];

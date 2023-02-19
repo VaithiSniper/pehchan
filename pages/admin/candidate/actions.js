@@ -23,7 +23,7 @@ import { ethers } from "ethers";
 import { candidateRecieved } from "../../../push.config";
 
 const contractAddress =
-  process.env.NEXT_PUBLIC_CANDIDATE_SMART_CONTRACT_ADDRESS;
+  process.env.NEXT_PUBLIC_CANDIDATE_SMART_CONTRACT_ADDRESS_POLYGON;
 const contractAbi = new ethers.utils.Interface(abiArray);
 
 const statusFlags = (num) =>
@@ -62,19 +62,25 @@ const financial = () => {
             Age: Number(dataItems[2]),
             Address: dataItems[3],
             ApplicationStaus: statusFlags(dataItems[4]),
+            Constituency: Number(dataItems[5]),
             CandidateID: index,
           }))
-          .filter((dataItem) => dataItem.Name !== "" && dataItem.Party !== ""),
+          .filter(
+            (dataItem) =>
+              dataItem.Name !== "" &&
+              dataItem.Party !== "" &&
+              dataItem.Address !== "0x168a40fa5495Ff7F92fCEb743A10984E409bb444"
+          ),
     });
     dataArr = data;
-    console.log(data, error);
   }
 
   // TODO: Implement The Graph
   useEffect(() => {
-    console.log(config);
-    if (config.args[0] !== "0x168a40fa5495Ff7F92fCEb743A10984E409bb444")
+    if (config.args[0] !== "0x168a40fa5495Ff7F92fCEb743A10984E409bb444") {
+      console.log(config, writeRes);
       writeRes.write?.();
+    }
   }, [config]);
 
   let configRes, writeRes;
@@ -87,6 +93,7 @@ const financial = () => {
     { field: "Name" },
     { field: "Party" },
     { field: "Age" },
+    { field: "Constituency" },
     { field: "CandidateID" },
     {
       field: "ApplicationStaus",
