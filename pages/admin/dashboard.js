@@ -27,7 +27,7 @@ const Dashboard = () => {
     <div className="justify-center items-center text-center gap-8 flex flex-row">
       <div className="w-full sm:w-1/2 md:w-1/2 lg:w-4/5 px-4 py-4 bg-grey mt-6 shadow-lg rounded-lg dark:bg-gray-800">
         <div className="justify-end items-end text-right gap-8 flex flex-row mb-4 pb-4">
-          <Link href={"/about"}>
+          <Link href={"../about"}>
             <Image
               height={40}
               width={40}
