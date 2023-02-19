@@ -83,7 +83,7 @@ const Dashboard = () => {
               title="Manage Candidates"
               text="Go"
               path="candidate/actions"
-            />
+            />{" "}
           </>
         </div>
       </div>
