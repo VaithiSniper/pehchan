@@ -1,5 +1,10 @@
 const abiArray = [
   {
+    inputs: [],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
     inputs: [
       {
         internalType: "address",
@@ -23,26 +28,8 @@ const abiArray = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_partyAddress",
-        type: "address",
-      },
-    ],
-    name: "removeCandidate",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [],
-    stateMutability: "nonpayable",
-    type: "constructor",
-  },
-  {
-    inputs: [],
-    name: "getDataOfAllCandidates",
+    name: "getDataOfAllParties",
     outputs: [
       {
         components: [
@@ -78,7 +65,7 @@ const abiArray = [
         type: "address",
       },
     ],
-    name: "getDataOfCandidate",
+    name: "getDataOfParty",
     outputs: [
       {
         internalType: "address",
@@ -148,6 +135,19 @@ const abiArray = [
       },
     ],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_partyAddress",
+        type: "address",
+      },
+    ],
+    name: "removeParty",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
 ];
