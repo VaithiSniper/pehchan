@@ -76,21 +76,28 @@ const abiArray = [
         name: "_candidateAddress",
         type: "address",
       },
-    ],
-    name: "removeCandidate",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
       {
-        internalType: "address",
-        name: "_candidateAddress",
-        type: "address",
+        internalType: "string",
+        name: "_name",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_party",
+        type: "string",
+      },
+      {
+        internalType: "uint8",
+        name: "_age",
+        type: "uint8",
+      },
+      {
+        internalType: "uint256",
+        name: "_ccode",
+        type: "uint256",
       },
     ],
-    name: "upgradeCandidate",
+    name: "addCandidate",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -276,6 +283,32 @@ const abiArray = [
       },
     ],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_candidateAddress",
+        type: "address",
+      },
+    ],
+    name: "removeCandidate",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_candidateAddress",
+        type: "address",
+      },
+    ],
+    name: "upgradeCandidate",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
 ];
