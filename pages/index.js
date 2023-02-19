@@ -5,37 +5,46 @@ import Typewriter from "typewriter-effect";
 export default function Home() {
   const router = useRouter();
   return (
-         <div className="grid grid-cols-6 gap-4 gap-x-12">
-          <div className="w-full col-start-2 col-end-4 justify-center">
-            <div className="text-6xl font-heading font-bold">
-              Your
-              <span className="text-banner text-gold">
-                <Typewriter
-                  options={{
-                    strings: [
-                      "Identity",
-                      "पहचान",
-                      "ಗುರುತು",
-                      "அடையாளம்",
-                      "గురుతు",
-                      "അടുത്തത്",
-                      "আপনার পরিচয়",
-                      "તમારું પરિચય",
-                      "ਤੁਹਾਡਾ ਪਰਿਚਯ",
-                      "ତୁହାର ପ୍ରତିନିଧି",
-                      "உங்கள் அடையாளம்",
-                    ],
-                    autoStart: true,
-                    loop: true,
-                  }}
-                />
-              </span>
-            </div>
-          </div>
-          <div className="w-full col-start-5 col-end-5">
-            <EthTest />
-          </div>
-          {/* <div>
+    <div className="grid grid-cols-6 gap-4 gap-x-12">
+      <div className="w-full col-start-2 col-end-4 justify-center">
+        <div className="text-6xl font-heading font-bold">
+          Your
+          <span className="text-banner text-gold">
+            <Typewriter
+              options={{
+                strings: [
+                  "Identity",
+                  "पहचान",
+                  "ಗುರುತು",
+                  "அடையாளம்",
+                  "గురుతు",
+                  "അടുത്തത്",
+                  "আপনার পরিচয়",
+                  "તમારું પરિચય",
+                  "ਤੁਹਾਡਾ ਪਰਿਚਯ",
+                  "ତୁହାର ପ୍ରତିନିଧି",
+                  "உங்கள் அடையாளம்",
+                ],
+                autoStart: true,
+                loop: true,
+              }}
+            />
+          </span>
+        </div>
+        <div className="w-full col-start-2 col-end-4 justify-center">
+          <span className="text-xl text-white">
+            More than a third of the country is dissatisfied with the electoral
+            process. We are here to change that. &nbsp;
+          </span>
+          <span className="text-xl text-purple">
+            <a href="/about">Click here to know more</a>
+          </span>
+        </div>
+      </div>
+      <div className="w-full col-start-5 col-end-5">
+        <EthTest />
+      </div>
+      {/* <div>
             <div>
               <button
                 onClick={(e) => {
@@ -58,6 +67,6 @@ export default function Home() {
               </button>
             </div>
           </div> */}
-        </div>
-  )
+    </div>
+  );
 }
