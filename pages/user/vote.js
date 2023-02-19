@@ -10,6 +10,7 @@ import {
 } from "wagmi";
 
 const contractAddress =
+  "0x8dFB2a8CCeB843a02B5EEb503de07b0c131bf08f" ||
   process.env.NEXT_PUBLIC_ELECTION_SMART_CONTRACT_ADDRESS_POLYGON;
 console.log("Contract is :", contractAddress);
 const contractAbi = new ethers.utils.Interface(electionAbiArray);

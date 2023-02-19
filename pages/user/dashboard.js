@@ -43,8 +43,8 @@ const Dashboard = () => {
   }, [tooltipState]);
 
   const contractAddress =
-    process.env.NEXT_PUBLIC_VOTER_SMART_CONTRACT_ADDRESS_POLYGON ||
-    "0x75F5fa33176394636826F0848266d863c5dA89D0";
+    "0x8dFB2a8CCeB843a02B5EEb503de07b0c131bf08f" ||
+    process.env.NEXT_PUBLIC_VOTER_SMART_CONTRACT_ADDRESS_POLYGON;
   const contractAbi = new ethers.utils.Interface(abiArray);
 
   let status = 0;
@@ -137,22 +137,21 @@ const Dashboard = () => {
             </>
           </div>
         ) : status == "Approved" ? (
-          <div className="text-md text-gray-500 dark:text-gray-300 pa-4 space-x-8 flex flex-row font-space justify-center items-center text-center">
-            <>
-              <Card title="You are a registered voter!" />
-            </>
-
-            <>
-              <Card title="Ongoing elections" text="Vote" path="action/vote" />
-            </>
-            <>
-              <Card
-                title="View previous elections"
-                text="View"
-                path="action/view"
-              />
-            </>
-          </div>
+          <>
+            <div className="text-md text-gray-500 dark:text-gray-300 pa-4 my-4 space-x-8 flex flex-row font-space justify-center items-center text-center">
+              <>
+                <Card title="You are a registered voter!" />
+              </>
+            </div>
+            <div className="text-md text-gray-500 dark:text-gray-300 pa-4 space-x-8 flex flex-row font-space justify-center items-center text-center">
+              <>
+                <Card title="Ongoing elections" text="Vote" path="vote" />
+              </>
+              <>
+                <Card title="View previous elections" text="View" path="view" />
+              </>
+            </div>
+          </>
         ) : null}
       </div>
     </div>
