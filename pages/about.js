@@ -3,9 +3,9 @@ import { useRouter } from "next/router";
 export default function About() {
   const router = useRouter();
   return (
-    <div class="absolute inset-x-0 top-0 h-8 bg-gray-700">
+    <div class="absolute inset-x-50 top-0 h-8 bg-gray-700">
       <div className="text-5xl font-heading font-bold text-left">
-        <h1>About Pehchan</h1>
+        <h1 className="text-center font-space">About Pehchan</h1>
       </div>
       <div className="grid grid-cols-3 gap-y-2 gap-x-2 justify-center items-center content-center pt-8">
         <div class="max-w-sm rounded overflow-hidden shadow-lg bg-grey col-start-1 col-end-1">
