@@ -26,8 +26,8 @@ export default function Home() {
   const [signer, setSigner] = useState();
 
   const contractAddress =
-    process.env.NEXT_PUBLIC_CANDIDATE_SMART_CONTRACT_ADDRESS_POLYGON ||
-    "0xA77972560f7222822A4Ee5C8C5f3cF8d0F6E5ff5";
+    "0x8e49a67Dd42520cC27A3c7Eae50A15271Dd07253" ||
+    process.env.NEXT_PUBLIC_CANDIDATE_SMART_CONTRACT_ADDRESS_POLYGON;
   const contractAbi = new ethers.utils.Interface(abiArray);
 
   const { address } = useAccount();

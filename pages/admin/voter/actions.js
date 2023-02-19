@@ -12,6 +12,7 @@ import "ag-grid-community/styles/ag-theme-alpine.css";
 import { useRouter } from "next/router";
 import { CodeIcon, TrashIcon } from "@heroicons/react/solid";
 import { ArrowUpIcon } from "@heroicons/react/outline";
+import { voterRecieved, voterRemoved } from "../../../push.config";
 import {
   useContractRead,
   useAccount,
@@ -21,10 +22,9 @@ import {
 } from "wagmi";
 import { ethers } from "ethers";
 import { candidateRecieved } from "../../../push.config";
-
 const contractAddress =
-  process.env.NEXT_PUBLIC_VOTER_SMART_CONTRACT_ADDRESS_POLYGON ||
-  "0x75F5fa33176394636826F0848266d863c5dA89D0";
+  "0x8dFB2a8CCeB843a02B5EEb503de07b0c131bf08f" ||
+  process.env.NEXT_PUBLIC_CANDIDATE_SMART_CONTRACT_ADDRESS_POLYGON;
 const contractAbi = new ethers.utils.Interface(abiArray);
 
 const statusFlags = (num) =>
@@ -47,7 +47,8 @@ const financial = () => {
     functionName: "upgradeVoter",
     args: ["0x75F5fa33176394636826F0848266d863c5dA89D0"],
   });
-  useContractEvent(candidateRecieved);
+  useContractEvent(voterRecieved);
+  useContractEvent(voterRemoved);
 
   console.log("Data is ", address);
   let dataArr;
@@ -101,14 +102,17 @@ const financial = () => {
         return (
           <>
             {params.data.ApplicationStaus}
-            <button
-              type="submit"
-              style={{ width: "10%", height: "80%", margin: "0% 1%" }}
-              className="text-white bg-green hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              {/* TODO: Fix icon not showing up */}
-              <ArrowUpIcon />
-            </button>
+            {params.data.ApplicationStaus != "Approved" ? (
+              <button
+                type="submit"
+                style={{ width: "10%", height: "80%", margin: "0% 1%" }}
+                className="text-white bg-green hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >
+                {/* TODO: Fix icon not showing up */}
+
+                <ArrowUpIcon />
+              </button>
+            ) : null}
           </>
         );
       },

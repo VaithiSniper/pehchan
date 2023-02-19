@@ -43,8 +43,8 @@ const Dashboard = () => {
   }, [tooltipState]);
 
   const contractAddress =
-    process.env.NEXT_PUBLIC_CANDIDATE_SMART_CONTRACT_ADDRESS_POLYGON ||
-    "0xA77972560f7222822A4Ee5C8C5f3cF8d0F6E5ff5";
+    "0x8e49a67Dd42520cC27A3c7Eae50A15271Dd07253" ||
+    process.env.NEXT_PUBLIC_CANDIDATE_SMART_CONTRACT_ADDRESS_POLYGON;
   const contractAbi = new ethers.utils.Interface(abiArray);
 
   let status = 0;
@@ -118,7 +118,7 @@ const Dashboard = () => {
           <div className="text-md text-gray-500 dark:text-gray-300 pa-4 space-x-8 flex flex-row font-space justify-center items-center text-center">
             <>
               <Card
-                title="Fill in your apllication"
+                title="Fill in your application"
                 text="Apply"
                 path="/candidate/application"
               />
