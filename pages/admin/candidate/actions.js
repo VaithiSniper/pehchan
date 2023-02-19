@@ -23,7 +23,8 @@ import { ethers } from "ethers";
 import { candidateRecieved } from "../../../push.config";
 
 const contractAddress =
-  process.env.NEXT_PUBLIC_CANDIDATE_SMART_CONTRACT_ADDRESS_POLYGON;
+  process.env.NEXT_PUBLIC_CANDIDATE_SMART_CONTRACT_ADDRESS_POLYGON ||
+  "0x38f8E2Bc7d52aFfE41FAA9d686c58EfEF833a2F0";
 const contractAbi = new ethers.utils.Interface(abiArray);
 
 const statusFlags = (num) =>

@@ -1,38 +1,5 @@
 const abiArray = [
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_candidateAddress",
-        type: "address",
-      },
-      {
-        internalType: "string",
-        name: "_name",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_party",
-        type: "string",
-      },
-      {
-        internalType: "uint8",
-        name: "_age",
-        type: "uint8",
-      },
-      {
-        internalType: "uint256",
-        name: "_ccode",
-        type: "uint256",
-      },
-    ],
-    name: "addCandidate",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [],
     stateMutability: "nonpayable",
     type: "constructor",

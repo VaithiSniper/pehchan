@@ -42,7 +42,9 @@ const Dashboard = () => {
     else router.push("/login");
   }, [tooltipState]);
 
-  const contractAddress = "0x428c69605fb111F395663108097A1AAa7A613Bd4";
+  const contractAddress =
+    process.env.NEXT_PUBLIC_CANDIDATE_SMART_CONTRACT_ADDRESS_POLYGON ||
+    "0xA77972560f7222822A4Ee5C8C5f3cF8d0F6E5ff5";
   const contractAbi = new ethers.utils.Interface(abiArray);
 
   let status = 0;

@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import abiArray from "../../contracts/candidateAbiArray";
+import abiArray from "../../contracts/voterAbiArray";
 import {
   useContract,
   useContractRead,
@@ -18,7 +18,6 @@ export default function Home() {
 
   const [record, setRecord] = useState({
     name: "",
-    party: "",
     age: 18,
     constituency: "",
   });
@@ -26,8 +25,7 @@ export default function Home() {
   const [signer, setSigner] = useState();
 
   const contractAddress =
-    process.env.NEXT_PUBLIC_CANDIDATE_SMART_CONTRACT_ADDRESS_POLYGON ||
-    "0xA77972560f7222822A4Ee5C8C5f3cF8d0F6E5ff5";
+    process.env.NEXT_PUBLIC_VOTER_SMART_CONTRACT_ADDRESS_POLYGON;
   const contractAbi = new ethers.utils.Interface(abiArray);
 
   const { address } = useAccount();
@@ -43,16 +41,14 @@ export default function Home() {
   const { config, error } = usePrepareContractWrite({
     address: contractAddress,
     abi: abiArray,
-    functionName: "addCandidate",
+    functionName: "addVoter",
     args: [
       address,
       record.name,
-      record.party,
       Number(record.age),
       Number(record.constituency),
     ],
   });
-
   const { data, isLoading, isSuccess, write } = useContractWrite(config);
 
   const handleBackButton = () => {
@@ -66,7 +62,7 @@ export default function Home() {
 
   const handleAddRecord = (e) => {
     e.preventDefault();
-    console.log(record);
+    console.log(error);
     write?.();
     // TODO: Write to contract with these values
   };
@@ -109,24 +105,24 @@ export default function Home() {
               </div>
               <div className="sm:col-span-12 lg:col-span-6">
                 <label
-                  htmlFor="party"
+                  htmlFor="constituency"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Party
+                  Constituency
                 </label>
                 <div className="mt-1 flex rounded-md shadow-sm">
                   <input
                     onChange={handleChange}
                     style={{ color: "black" }}
-                    value={record.party}
+                    value={record.constituency}
                     type="text"
-                    name="party"
+                    name="constituency"
                     autoComplete="party"
                     className="flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                   />
                 </div>
               </div>
-              <div className="sm:col-span-12 lg:col-span-3">
+              <div className="sm:col-span-12 lg:col-span-6">
                 <label
                   htmlFor="age"
                   className="block text-sm font-medium text-gray-700"
@@ -145,25 +141,7 @@ export default function Home() {
                   />
                 </div>
               </div>
-              <div className="sm:col-span-12 lg:col-span-3">
-                <label
-                  htmlFor="constituency"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Constituency
-                </label>
-                <div className="mt-1 flex rounded-md shadow-sm">
-                  <input
-                    onChange={handleChange}
-                    style={{ color: "black" }}
-                    value={record.constituency}
-                    type="number"
-                    name="constituency"
-                    autoComplete="constituency"
-                    className="flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
-                  />
-                </div>
-              </div>
+
               <div className="sm:col-span-12 lg:col-span-6">
                 <button
                   onClick={handleAddRecord}

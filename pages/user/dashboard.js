@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
-import abiArray from "../../contracts/candidateAbiArray";
+import abiArray from "../../contracts/voterAbiArray";
 import * as PushAPI from "@pushprotocol/restapi";
 import * as ethers from "ethers";
 import Card from "../../components/card";
@@ -42,7 +42,9 @@ const Dashboard = () => {
     else router.push("/login");
   }, [tooltipState]);
 
-  const contractAddress = "0x428c69605fb111F395663108097A1AAa7A613Bd4";
+  const contractAddress =
+    process.env.NEXT_PUBLIC_VOTER_SMART_CONTRACT_ADDRESS_POLYGON ||
+    "0x75F5fa33176394636826F0848266d863c5dA89D0";
   const contractAbi = new ethers.utils.Interface(abiArray);
 
   let status = 0;
