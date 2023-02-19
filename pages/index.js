@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import Typewriter from "typewriter-effect";
-import SpinningAnimation from "../components/anim";
+import Image from "next/image";
 
 export default function Home() {
   const router = useRouter();
@@ -14,17 +14,17 @@ export default function Home() {
               <Typewriter
                 options={{
                   strings: [
-                    "Identity",
+                    // "Identity",
                     "पहचान",
-                    "ಗುರುತು",
-                    "அடையாளம்",
-                    "గురుతు",
-                    "അടുത്തത്",
-                    "আপনার পরিচয়",
-                    "તમારું પરિચય",
-                    "ਤੁਹਾਡਾ ਪਰਿਚਯ",
-                    "ତୁହାର ପ୍ରତିନିଧି",
-                    "உங்கள் அடையாளம்",
+                    // "ಗುರುತು",
+                    // "அடையாளம்",
+                    // "గురుతు",
+                    // "അടുത്തത്",
+                    // "আপনার পরিচয়",
+                    // "તમારું પરિચય",
+                    // "ਤੁਹਾਡਾ ਪਰਿਚਯ",
+                    // "ତୁହାର ପ୍ରତିନିଧି",
+                    // "உங்கள் அடையாளம்",
                   ],
                   autoStart: true,
                   loop: true,
@@ -59,18 +59,21 @@ export default function Home() {
               router.push("/login");
             }}
             type="button"
-            className="flex items-center p-4 transition ease-in duration-200 uppercase rounded-full hover:bg-cyan-600 hover:text-white border-2 border-cyan-900 focus:outline-none bg-grey"
+            style={{
+              boxShadow: "0px 0px 0px 3px rgba(178,146,85,0.7)",
+              boxShadow: "0px 0px 0px 5px rgba(178,146,85,0.3)",
+            }}
+            className=" glow-blue-600 flex items-center p-4 transition ease-in duration-200 uppercase rounded-full hover:bg-cyan-600 hover:bg-gold hover:shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] border-2 border-cyan-900 focus:outline-none bg-white"
           >
-            <svg
-              width="24"
-              height="24"
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-              fillRule="evenodd"
-              clipRule="evenodd"
-            >
-              <path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z" />
-            </svg>
+            <Image
+              height={40}
+              width={40}
+              src="/wallet.png"
+              alt="Wallet"
+              className={
+                "px-4 ml-0 rounded-full border-gold border-2 inline float-left text-left items-end justify-end"
+              }
+            />
           </button>
         </div>
       </div>
