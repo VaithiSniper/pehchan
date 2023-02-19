@@ -40,20 +40,9 @@ const chainList = [mainnet, goerli, filecoinHyperspace, polygon, polygonMumbai];
 const { chains, provider, webSocketProvider } = configureChains(chainList, [
   jsonRpcProvider({
     rpc: () => ({
-      http: `https://goerli.blockpi.network/v1/rpc/public`,
-    }),
-  }),
-  jsonRpcProvider({
-    rpc: () => ({
       http: `https://rpc.ankr.com/polygon_mumbai`,
     }),
   }),
-  jsonRpcProvider({
-    rpc: () => ({
-      http: `https://filecoin-hyperspace.chainstacklabs.com/rpc/v1`,
-    }),
-  }),
-  publicProvider(),
 ]);
 
 const wagmiClient = createClient({

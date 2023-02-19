@@ -1,62 +1,8 @@
 const voterAbiArray = [
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_voterAddress",
-        type: "address",
-      },
-      {
-        internalType: "string",
-        name: "_name",
-        type: "string",
-      },
-      {
-        internalType: "uint8",
-        name: "_age",
-        type: "uint8",
-      },
-      {
-        internalType: "uint256",
-        name: "_ccode",
-        type: "uint256",
-      },
-    ],
-    name: "addVoter",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_voterAddress",
-        type: "address",
-      },
-    ],
-    name: "removeVoter",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [],
     stateMutability: "nonpayable",
     type: "constructor",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_voterAddress",
-        type: "address",
-      },
-    ],
-    name: "upgradeCandidate",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
   },
   {
     anonymous: false,
@@ -89,6 +35,69 @@ const voterAbiArray = [
     ],
     name: "voterStatus",
     type: "event",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_voterAddress",
+        type: "address",
+      },
+      {
+        internalType: "string",
+        name: "_name",
+        type: "string",
+      },
+      {
+        internalType: "uint8",
+        name: "_age",
+        type: "uint8",
+      },
+      {
+        internalType: "uint256",
+        name: "_ccode",
+        type: "uint256",
+      },
+    ],
+    name: "addVoter",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getDataOfAllApprovedVoters",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "string",
+            name: "name",
+            type: "string",
+          },
+          {
+            internalType: "uint256",
+            name: "age",
+            type: "uint256",
+          },
+          {
+            internalType: "address",
+            name: "voterAddress",
+            type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "ccode",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct Voter.approvedvoterMetaData[]",
+        name: "",
+        type: "tuple[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
   },
   {
     inputs: [],
@@ -232,6 +241,32 @@ const voterAbiArray = [
     type: "function",
   },
   {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_voterAddress",
+        type: "address",
+      },
+    ],
+    name: "removeVoter",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_voterAddress",
+        type: "address",
+      },
+    ],
+    name: "upgradeVoter",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "voterCount",
     outputs: [
@@ -245,5 +280,4 @@ const voterAbiArray = [
     type: "function",
   },
 ];
-
 export default voterAbiArray;

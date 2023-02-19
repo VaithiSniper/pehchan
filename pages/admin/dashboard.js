@@ -83,7 +83,12 @@ const Dashboard = () => {
               title="Manage Candidates"
               text="Go"
               path="candidate/actions"
-            />
+            />{" "}
+          </>
+          <>
+            <>
+              <Card title="Manage Voters" text="Go" path="voter/actions" />{" "}
+            </>
           </>
         </div>
       </div>

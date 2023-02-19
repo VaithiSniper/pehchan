@@ -5,7 +5,7 @@ import React, {
   useCallback,
   useEffect,
 } from "react";
-import abiArray from "../../../contracts/candidateAbiArray";
+import abiArray from "../../../contracts/voterAbiArray";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
@@ -23,8 +23,8 @@ import { ethers } from "ethers";
 import { candidateRecieved } from "../../../push.config";
 
 const contractAddress =
-  process.env.NEXT_PUBLIC_CANDIDATE_SMART_CONTRACT_ADDRESS_POLYGON ||
-  "0x38f8E2Bc7d52aFfE41FAA9d686c58EfEF833a2F0";
+  process.env.NEXT_PUBLIC_VOTER_SMART_CONTRACT_ADDRESS_POLYGON ||
+  "0x75F5fa33176394636826F0848266d863c5dA89D0";
 const contractAbi = new ethers.utils.Interface(abiArray);
 
 const statusFlags = (num) =>
@@ -44,8 +44,8 @@ const financial = () => {
   const [config, setConfig] = useState({
     address: contractAddress,
     abi: abiArray,
-    functionName: "upgradeCandidate",
-    args: ["0x168a40fa5495Ff7F92fCEb743A10984E409bb444"],
+    functionName: "upgradeVoter",
+    args: ["0x75F5fa33176394636826F0848266d863c5dA89D0"],
   });
   useContractEvent(candidateRecieved);
 
@@ -55,23 +55,21 @@ const financial = () => {
     const { data, isError, isLoading, error } = useContractRead({
       address: contractAddress,
       abi: contractAbi,
-      functionName: "getDataOfAllCandidates",
+      functionName: "getDataOfAllVoters",
       select: (data) =>
         data
           .map((dataItems, index) => ({
             Name: dataItems[0],
-            Party: dataItems[1],
-            Age: Number(dataItems[2]),
-            Address: dataItems[3],
-            ApplicationStaus: statusFlags(dataItems[4]),
-            ConstituencyCode: Number(dataItems[5]),
-            CandidateID: index,
+            Age: Number(dataItems[1]),
+            Address: dataItems[2],
+            ApplicationStaus: statusFlags(dataItems[3]),
+            ConstituencyCode: Number(dataItems[4]),
+            VoterID: index,
           }))
           .filter(
             (dataItem) =>
               dataItem.Name !== "" &&
-              dataItem.Party !== "" &&
-              dataItem.Address !== "0x168a40fa5495Ff7F92fCEb743A10984E409bb444"
+              dataItem.Address !== "0x75F5fa33176394636826F0848266d863c5dA89D0"
           ),
     });
     dataArr = data;
@@ -79,7 +77,7 @@ const financial = () => {
 
   // TODO: Implement The Graph
   useEffect(() => {
-    if (config.args[0] !== "0x168a40fa5495Ff7F92fCEb743A10984E409bb444") {
+    if (config.args[0] !== "0x75F5fa33176394636826F0848266d863c5dA89D0") {
       console.log(config, writeRes);
       writeRes.write?.();
     }
@@ -93,10 +91,8 @@ const financial = () => {
 
   const [columnDefs] = useState([
     { field: "Name" },
-    { field: "Party" },
     { field: "Age" },
-    { field: "Constituency" },
-    { field: "CandidateID" },
+    { field: "VoterID" },
     { field: "ConstituencyCode" },
     {
       field: "ApplicationStaus",
@@ -120,7 +116,7 @@ const financial = () => {
         const configObj = {
           address: contractAddress,
           abi: abiArray,
-          functionName: "upgradeCandidate",
+          functionName: "upgradeVoter",
           args: [params.data.Address],
         };
         setConfig(configObj);
@@ -144,7 +140,7 @@ const financial = () => {
         const configObj = {
           address: contractAddress,
           abi: abiArray,
-          functionName: "removeCandidate",
+          functionName: "removeVoter",
           args: [params.data.Address],
         };
         setConfig(configObj);
@@ -158,11 +154,13 @@ const financial = () => {
     filter: true,
     pagination: true,
     resizable: true,
+    width: 150,
+    searchable: true,
   }));
 
   const onGridReady = useCallback((params) => {
-    setRowData(dataArr);
     params.api.sizeColumnsToFit();
+    setRowData(dataArr);
   }, []);
 
   const onBtExport = () => {
@@ -188,18 +186,19 @@ const financial = () => {
         </button>
       </div>
       <div className="ag-theme-alpine" style={{ width: 800, height: 500 }}>
-        <h5 className="mb-5 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-          Candidate List
+        <h5 className="mb-5 text-2xl font-bold tracking-tight text-gray-900 text-white">
+          Voter List
         </h5>
         <AgGridReact
+          className="mt-10"
+          ref={gridRef}
           rowData={rowData}
           columnDefs={columnDefs}
-          onGridReady={onGridReady}
-          ref={gridRef}
           defaultColDef={defaultColDef}
           animateRows={true}
           rowSelection="multiple"
-        ></AgGridReact>
+          onGridReady={onGridReady}
+        />
       </div>
     </div>
   );
