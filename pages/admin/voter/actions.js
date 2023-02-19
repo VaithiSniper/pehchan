@@ -5,13 +5,14 @@ import React, {
   useCallback,
   useEffect,
 } from "react";
-import abiArray from "../../../contracts/candidateAbiArray";
+import abiArray from "../../../contracts/voterAbiArray";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { useRouter } from "next/router";
 import { CodeIcon, TrashIcon } from "@heroicons/react/solid";
 import { ArrowUpIcon } from "@heroicons/react/outline";
+import { voterRecieved, voterRemoved } from "../../../push.config";
 import {
   useContractRead,
   useAccount,
@@ -20,10 +21,9 @@ import {
   useContractEvent,
 } from "wagmi";
 import { ethers } from "ethers";
-import { candidateRecieved, candidateRemoved } from "../../../push.config";
-
+import { candidateRecieved } from "../../../push.config";
 const contractAddress =
-  "0x8e49a67Dd42520cC27A3c7Eae50A15271Dd07253" ||
+  "0x8dFB2a8CCeB843a02B5EEb503de07b0c131bf08f" ||
   process.env.NEXT_PUBLIC_CANDIDATE_SMART_CONTRACT_ADDRESS_POLYGON;
 const contractAbi = new ethers.utils.Interface(abiArray);
 
@@ -44,11 +44,11 @@ const financial = () => {
   const [config, setConfig] = useState({
     address: contractAddress,
     abi: abiArray,
-    functionName: "upgradeCandidate",
-    args: ["0x168a40fa5495Ff7F92fCEb743A10984E409bb444"],
+    functionName: "upgradeVoter",
+    args: ["0x75F5fa33176394636826F0848266d863c5dA89D0"],
   });
-  useContractEvent(candidateRecieved);
-  useContractEvent(candidateRemoved);
+  useContractEvent(voterRecieved);
+  useContractEvent(voterRemoved);
 
   console.log("Data is ", address);
   let dataArr;
@@ -56,23 +56,21 @@ const financial = () => {
     const { data, isError, isLoading, error } = useContractRead({
       address: contractAddress,
       abi: contractAbi,
-      functionName: "getDataOfAllCandidates",
+      functionName: "getDataOfAllVoters",
       select: (data) =>
         data
           .map((dataItems, index) => ({
             Name: dataItems[0],
-            Party: dataItems[1],
-            Age: Number(dataItems[2]),
-            Address: dataItems[3],
-            ApplicationStaus: statusFlags(dataItems[4]),
-            ConstituencyCode: Number(dataItems[5]),
-            CandidateID: index,
+            Age: Number(dataItems[1]),
+            Address: dataItems[2],
+            ApplicationStaus: statusFlags(dataItems[3]),
+            ConstituencyCode: Number(dataItems[4]),
+            VoterID: index,
           }))
           .filter(
             (dataItem) =>
               dataItem.Name !== "" &&
-              dataItem.Party !== "" &&
-              dataItem.Address !== "0x168a40fa5495Ff7F92fCEb743A10984E409bb444"
+              dataItem.Address !== "0x75F5fa33176394636826F0848266d863c5dA89D0"
           ),
     });
     dataArr = data;
@@ -80,7 +78,7 @@ const financial = () => {
 
   // TODO: Implement The Graph
   useEffect(() => {
-    if (config.args[0] !== "0x168a40fa5495Ff7F92fCEb743A10984E409bb444") {
+    if (config.args[0] !== "0x75F5fa33176394636826F0848266d863c5dA89D0") {
       console.log(config, writeRes);
       writeRes.write?.();
     }
@@ -94,10 +92,8 @@ const financial = () => {
 
   const [columnDefs] = useState([
     { field: "Name" },
-    { field: "Party" },
     { field: "Age" },
-    { field: "Constituency" },
-    { field: "CandidateID" },
+    { field: "VoterID" },
     { field: "ConstituencyCode" },
     {
       field: "ApplicationStaus",
@@ -106,14 +102,17 @@ const financial = () => {
         return (
           <>
             {params.data.ApplicationStaus}
-            <button
-              type="submit"
-              style={{ width: "10%", height: "80%", margin: "0% 1%" }}
-              className="text-white bg-green hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              {/* TODO: Fix icon not showing up */}
-              <ArrowUpIcon />
-            </button>
+            {params.data.ApplicationStaus != "Approved" ? (
+              <button
+                type="submit"
+                style={{ width: "10%", height: "80%", margin: "0% 1%" }}
+                className="text-white bg-green hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >
+                {/* TODO: Fix icon not showing up */}
+
+                <ArrowUpIcon />
+              </button>
+            ) : null}
           </>
         );
       },
@@ -121,7 +120,7 @@ const financial = () => {
         const configObj = {
           address: contractAddress,
           abi: abiArray,
-          functionName: "upgradeCandidate",
+          functionName: "upgradeVoter",
           args: [params.data.Address],
         };
         setConfig(configObj);
@@ -145,7 +144,7 @@ const financial = () => {
         const configObj = {
           address: contractAddress,
           abi: abiArray,
-          functionName: "removeCandidate",
+          functionName: "removeVoter",
           args: [params.data.Address],
         };
         setConfig(configObj);
@@ -159,11 +158,13 @@ const financial = () => {
     filter: true,
     pagination: true,
     resizable: true,
+    width: 150,
+    searchable: true,
   }));
 
   const onGridReady = useCallback((params) => {
-    setRowData(dataArr);
     params.api.sizeColumnsToFit();
+    setRowData(dataArr);
   }, []);
 
   const onBtExport = () => {
@@ -189,18 +190,19 @@ const financial = () => {
         </button>
       </div>
       <div className="ag-theme-alpine" style={{ width: 800, height: 500 }}>
-        <h5 className="mb-5 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-          Candidate List
+        <h5 className="mb-5 text-2xl font-bold tracking-tight text-gray-900 text-white">
+          Voter List
         </h5>
         <AgGridReact
+          className="mt-10"
+          ref={gridRef}
           rowData={rowData}
           columnDefs={columnDefs}
-          onGridReady={onGridReady}
-          ref={gridRef}
           defaultColDef={defaultColDef}
           animateRows={true}
           rowSelection="multiple"
-        ></AgGridReact>
+          onGridReady={onGridReady}
+        />
       </div>
     </div>
   );
