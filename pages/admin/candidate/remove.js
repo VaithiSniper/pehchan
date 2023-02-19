@@ -21,8 +21,9 @@ export default function Home() {
   });
 
   const [signer, setSigner] = useState();
-
-  const contractAddress = "0xEc0b043C4FbEE32A0c486b727980C6bfb0FFfDEA";
+  const contractAddress =
+    "0x8e49a67Dd42520cC27A3c7Eae50A15271Dd07253" ||
+    process.env.NEXT_PUBLIC_CANDIDATE_SMART_CONTRACT_ADDRESS_POLYGON;
   const contractAbi = new ethers.utils.Interface(abiArray);
 
   const { address } = useAccount();

@@ -30,7 +30,12 @@ const connector = () => {
       appId: `9e0c6715d9ea7aab73535c8c359d8b45ac2587bc`, // appId = App Address
       theme: "dark", // Defaults to 'dark'
       alwaysVisible: true, // Defaults to true
-      position: "right", // Defaults to 'right'
+      position: "right",
+      network: "mainnet",
+      chainConfig: {
+        chainId: 80001, //defaults to CHAIN.ETHEREUM_MAINNET
+        rpcUrl: "https://endpoints.omniatech.io/v1/matic/mumbai/public	", //defaults to 'https://rpc.ankr.com/eth'
+      }, // Defaults to 'right'
     },
   });
 };

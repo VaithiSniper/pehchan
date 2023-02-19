@@ -20,11 +20,11 @@ import {
   useContractEvent,
 } from "wagmi";
 import { ethers } from "ethers";
-import { candidateRecieved } from "../../../push.config";
+import { candidateRecieved, candidateRemoved } from "../../../push.config";
 
 const contractAddress =
-  process.env.NEXT_PUBLIC_CANDIDATE_SMART_CONTRACT_ADDRESS_POLYGON ||
-  "0x38f8E2Bc7d52aFfE41FAA9d686c58EfEF833a2F0";
+  "0x8e49a67Dd42520cC27A3c7Eae50A15271Dd07253" ||
+  process.env.NEXT_PUBLIC_CANDIDATE_SMART_CONTRACT_ADDRESS_POLYGON;
 const contractAbi = new ethers.utils.Interface(abiArray);
 
 const statusFlags = (num) =>
@@ -48,6 +48,7 @@ const financial = () => {
     args: ["0x168a40fa5495Ff7F92fCEb743A10984E409bb444"],
   });
   useContractEvent(candidateRecieved);
+  useContractEvent(candidateRemoved);
 
   console.log("Data is ", address);
   let dataArr;
