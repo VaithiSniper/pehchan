@@ -20,12 +20,14 @@ export default function Home() {
     name: "",
     party: "",
     age: 18,
-    candidateAddress: "",
+    constituency: "",
   });
 
   const [signer, setSigner] = useState();
 
-  const contractAddress = "0x38f8E2Bc7d52aFfE41FAA9d686c58EfEF833a2F0";
+  const contractAddress =
+    process.env.NEXT_PUBLIC_CANDIDATE_SMART_CONTRACT_ADDRESS_POLYGON ||
+    "0xA77972560f7222822A4Ee5C8C5f3cF8d0F6E5ff5";
   const contractAbi = new ethers.utils.Interface(abiArray);
 
   const { address } = useAccount();
@@ -47,42 +49,11 @@ export default function Home() {
       record.name,
       record.party,
       Number(record.age),
-      record.candidateAddress,
+      Number(record.constituency),
     ],
   });
+
   const { data, isLoading, isSuccess, write } = useContractWrite(config);
-
-  // if (signer !== null) {
-  //   const wallet = new ethers.Wallet(
-  //     "73eaaf6c0a8122388b46c2c1a4e1b922a0a9186c32f8c7cf580293af6a674f92",
-  //     signer
-  //   );
-  //   console.log(wallet);
-  //   const contract = new ethers.Contract(contractAddress, abiArray, signer);
-  //   // contract = useContract({
-  //   //   address: contractAddress,
-  //   //   abi: abiArray,
-  //   //   signerOrProvider: signer,
-  //   // });
-
-  //   const res = contract.getDataOfCandidate(
-  //     "0x379f7dEBf9495D8DE278A4A45A401F27f38564B7"
-  //   );
-
-  //   console.log(res);
-
-  //   // useEffect(() => {
-  //   //   if (signer !== null && contract !== null) {
-  //   //     const getDataOfCandidate = async (contract) =>
-  //   //       await contract.getDataOfCandidate(
-  //   //         "0x379f7dEBf9495D8DE278A4A45A401F27f38564B7"
-  //   //       );
-  //   //     console.log(getDataOfCandidate(contract));
-  //   //   }
-  //   // }, []);
-
-  //   //const res = getDataOfCandidate(contract);
-  // }
 
   const handleBackButton = () => {
     router.back();
@@ -95,6 +66,7 @@ export default function Home() {
 
   const handleAddRecord = (e) => {
     e.preventDefault();
+    console.log(record);
     write?.();
     // TODO: Write to contract with these values
   };
@@ -127,7 +99,7 @@ export default function Home() {
                   <input
                     onChange={handleChange}
                     style={{ color: "black" }}
-                    value={record.eventName}
+                    value={record.name}
                     type="text"
                     name="name"
                     autoComplete="name"
@@ -146,7 +118,7 @@ export default function Home() {
                   <input
                     onChange={handleChange}
                     style={{ color: "black" }}
-                    value={record.eventName}
+                    value={record.party}
                     type="text"
                     name="party"
                     autoComplete="party"
@@ -165,7 +137,7 @@ export default function Home() {
                   <input
                     onChange={handleChange}
                     style={{ color: "black" }}
-                    value={record.eventName}
+                    value={record.age}
                     type="number"
                     name="age"
                     autoComplete="age"
@@ -184,10 +156,10 @@ export default function Home() {
                   <input
                     onChange={handleChange}
                     style={{ color: "black" }}
-                    value={record.eventName}
-                    type="text"
-                    name="candidateAddress"
-                    autoComplete="party"
+                    value={record.constituency}
+                    type="number"
+                    name="constituency"
+                    autoComplete="constituency"
                     className="flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                   />
                 </div>

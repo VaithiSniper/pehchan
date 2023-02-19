@@ -43,12 +43,6 @@ const { chains, provider, webSocketProvider } = configureChains(chainList, [
       http: `https://rpc.ankr.com/polygon_mumbai`,
     }),
   }),
-  jsonRpcProvider({
-    rpc: () => ({
-      http: `https://filecoin-hyperspace.chainstacklabs.com/rpc/v1`,
-    }),
-  }),
-  publicProvider(),
 ]);
 
 const wagmiClient = createClient({
