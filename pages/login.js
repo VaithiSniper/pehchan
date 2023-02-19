@@ -32,6 +32,7 @@ export default function Login() {
       console.log(isConnected ? "Connected" : "Not connected");
       // Modify dashboard component and put that route here
       const ownerAddress = process.env.NEXT_PUBLIC_OWNER_ADDRESS;
+      console.log(type);
       if (type === "candidate") {
         router.push("/candidate/dashboard");
       } else if (type === "voter") {
@@ -49,8 +50,8 @@ export default function Login() {
           <div className="container font-bold font-space text-4xl mb-2 flex flex-col items-center py-3">
             <span>Login </span>
 
-            <div class="flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700">
-              <div class="px-6 flex items-center">
+            <div className="flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700">
+              <div className="px-6 flex items-center">
                 <input
                   id="bordered-radio-1"
                   type="radio"
@@ -60,16 +61,16 @@ export default function Login() {
                     setType(e.target.value);
                     console.log(type);
                   }}
-                  class="w-4 h-4 ml-2 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  className="w-4 h-4 ml-2 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 />
                 <label
-                  for="bordered-radio-1"
-                  class="w-full py-4 px-3 ml-2 text-sm font-big text-gray-900 dark:text-gray-300"
+                  htmlFor="bordered-radio-1"
+                  className="w-full py-4 px-3 ml-2 text-sm font-big text-gray-900 dark:text-gray-300"
                 >
                   Candidate
                 </label>
               </div>
-              <div class="px-6 flex items-center">
+              <div className="px-6 flex items-center">
                 <input
                   checked
                   id="bordered-radio-2"
@@ -80,16 +81,16 @@ export default function Login() {
                     setType(e.target.value);
                     console.log(type);
                   }}
-                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 />
                 <label
-                  for="bordered-radio-2"
-                  class="w-full py-4 px-3 ml-3 text-sm font-big text-gray-900 dark:text-gray-300"
+                  htmlFor="bordered-radio-2"
+                  className="w-full py-4 px-3 ml-3 text-sm font-big text-gray-900 dark:text-gray-300"
                 >
                   Voter
                 </label>
               </div>
-              <div class="px-6 flex items-center">
+              <div className="px-6 flex items-center">
                 <input
                   checked
                   id="bordered-radio-2"
@@ -100,11 +101,11 @@ export default function Login() {
                     setType(e.target.value);
                     console.log(type);
                   }}
-                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 />
                 <label
-                  for="bordered-radio-2"
-                  class="w-full py-4 px-3 mr-3 text-sm font-big text-gray-900 dark:text-gray-300"
+                  htmlFor="bordered-radio-2"
+                  className="w-full py-4 px-3 mr-3 text-sm font-big text-gray-900 dark:text-gray-300"
                 >
                   Admin
                 </label>

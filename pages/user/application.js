@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import abiArray from "../../contracts/candidateAbiArray";
+import abiArray from "../../contracts/voterAbiArray";
 import {
   useContract,
   useContractRead,
@@ -18,7 +18,6 @@ export default function Home() {
 
   const [record, setRecord] = useState({
     name: "",
-    party: "",
     age: 18,
     candidateAddress: "",
   });
@@ -41,14 +40,8 @@ export default function Home() {
   const { config, error } = usePrepareContractWrite({
     address: contractAddress,
     abi: abiArray,
-    functionName: "addCandidate",
-    args: [
-      address,
-      record.name,
-      record.party,
-      Number(record.age),
-      record.candidateAddress,
-    ],
+    functionName: "addVoter",
+    args: [address, record.name, Number(record.age), record.candidateAddress],
   });
   const { data, isLoading, isSuccess, write } = useContractWrite(config);
 
@@ -137,10 +130,10 @@ export default function Home() {
               </div>
               <div className="sm:col-span-12 lg:col-span-6">
                 <label
-                  htmlFor="party"
+                  htmlFor="constituency"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Party
+                  Constituency
                 </label>
                 <div className="mt-1 flex rounded-md shadow-sm">
                   <input
@@ -148,13 +141,13 @@ export default function Home() {
                     style={{ color: "black" }}
                     value={record.eventName}
                     type="text"
-                    name="party"
+                    name="candidateAddress"
                     autoComplete="party"
                     className="flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                   />
                 </div>
               </div>
-              <div className="sm:col-span-12 lg:col-span-3">
+              <div className="sm:col-span-12 lg:col-span-6">
                 <label
                   htmlFor="age"
                   className="block text-sm font-medium text-gray-700"
@@ -173,25 +166,7 @@ export default function Home() {
                   />
                 </div>
               </div>
-              <div className="sm:col-span-12 lg:col-span-3">
-                <label
-                  htmlFor="constituency"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Constituency
-                </label>
-                <div className="mt-1 flex rounded-md shadow-sm">
-                  <input
-                    onChange={handleChange}
-                    style={{ color: "black" }}
-                    value={record.eventName}
-                    type="text"
-                    name="candidateAddress"
-                    autoComplete="party"
-                    className="flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
-                  />
-                </div>
-              </div>
+
               <div className="sm:col-span-12 lg:col-span-6">
                 <button
                   onClick={handleAddRecord}
