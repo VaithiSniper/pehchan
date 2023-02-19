@@ -133,7 +133,7 @@ const Dashboard = () => {
         </>
         <div className="text-md text-gray-500 dark:text-gray-300 pa-4 space-x-8 flex flex-row font-space">
           <>
-            <Card title="Ongoing elections" text="Vote" path="action/vote" />
+            <Card title="Ongoing elections" text="Vote" path="/user/vote" />
           </>
           <>
             <Card
