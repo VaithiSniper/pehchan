@@ -66,6 +66,41 @@ const voterAbiArray = [
   },
   {
     inputs: [],
+    name: "getDataOfAllApprovedVoters",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "string",
+            name: "name",
+            type: "string",
+          },
+          {
+            internalType: "uint256",
+            name: "age",
+            type: "uint256",
+          },
+          {
+            internalType: "address",
+            name: "voterAddress",
+            type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "ccode",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct Voter.approvedvoterMetaData[]",
+        name: "",
+        type: "tuple[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "getDataOfAllVoters",
     outputs: [
       {
@@ -226,7 +261,7 @@ const voterAbiArray = [
         type: "address",
       },
     ],
-    name: "upgradeCandidate",
+    name: "upgradeVoter",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -245,5 +280,4 @@ const voterAbiArray = [
     type: "function",
   },
 ];
-
 export default voterAbiArray;
