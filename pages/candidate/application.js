@@ -20,6 +20,7 @@ export default function Home() {
     name: "",
     party: "",
     age: 18,
+    candidateAddress: "",
   });
 
   const [signer, setSigner] = useState();
@@ -41,7 +42,13 @@ export default function Home() {
     address: contractAddress,
     abi: abiArray,
     functionName: "addCandidate",
-    args: [address, record.name, record.party, Number(record.age)],
+    args: [
+      address,
+      record.name,
+      record.party,
+      Number(record.age),
+      record.candidateAddress,
+    ],
   });
   const { data, isLoading, isSuccess, write } = useContractWrite(config);
 
@@ -106,10 +113,10 @@ export default function Home() {
         Enter your information
       </span>
       <form className="space-y-8 divide-y divide-gray-200">
-        <div className="p-6 bg-gold text-white rounded-lg border border-gold shadow-md dark:bg-gray-800 dark:border-gray-700 w-full">
+        <div className="p-6 bg-gold flex justify-center text-white rounded-lg border border-gold shadow-md dark:bg-gray-800 dark:border-gray-700 w-full">
           <div className="space-y-8 divide-y divide-gray-200 justify-center items-center text-center">
-            <div className="mt-6 grid lg:grid-cols-12 gap-y-6 gap-x-4 sm:grid-cols-12">
-              <div className="sm:col-span-12 lg:col-span-4">
+            <div className="mt-6 grid flex justify-center gap-y-6 gap-x-4">
+              <div className="sm:col-span-12 lg:col-span-6">
                 <label
                   htmlFor="name"
                   className="block text-sm font-medium text-gray-700"
@@ -128,7 +135,7 @@ export default function Home() {
                   />
                 </div>
               </div>
-              <div className="sm:col-span-12 lg:col-span-4">
+              <div className="sm:col-span-12 lg:col-span-6">
                 <label
                   htmlFor="party"
                   className="block text-sm font-medium text-gray-700"
@@ -147,7 +154,7 @@ export default function Home() {
                   />
                 </div>
               </div>
-              <div className="sm:col-span-12 lg:col-span-4">
+              <div className="sm:col-span-12 lg:col-span-3">
                 <label
                   htmlFor="age"
                   className="block text-sm font-medium text-gray-700"
@@ -166,14 +173,35 @@ export default function Home() {
                   />
                 </div>
               </div>
+              <div className="sm:col-span-12 lg:col-span-3">
+                <label
+                  htmlFor="constituency"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Constituency
+                </label>
+                <div className="mt-1 flex rounded-md shadow-sm">
+                  <input
+                    onChange={handleChange}
+                    style={{ color: "black" }}
+                    value={record.eventName}
+                    type="text"
+                    name="candidateAddress"
+                    autoComplete="party"
+                    className="flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
+                  />
+                </div>
+              </div>
+              <div className="sm:col-span-12 lg:col-span-6">
+                <button
+                  onClick={handleAddRecord}
+                  type="submit"
+                  className="text-white bg-green hover:bg-blue-800 focus:ring-4 focus:outline-none font-bold rounded-lg text-sm w-full px-5 py-2.5 text-center lg:col-span-3"
+                >
+                  Save
+                </button>
+              </div>
             </div>
-            <button
-              onClick={handleAddRecord}
-              type="submit"
-              className="text-white bg-green hover:bg-blue-800 focus:ring-4 focus:outline-none font-bold rounded-lg text-sm w-1/4 px-5 py-2.5 text-center"
-            >
-              Save
-            </button>
           </div>
         </div>
       </form>

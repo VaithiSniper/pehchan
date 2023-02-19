@@ -56,7 +56,7 @@ contract Voter {
         emit voterStatus(_voterAddress, applicationStatus.In_Review);
     }
 
-    function upgradeCandidate(address _voterAddress) public {
+    function upgradeVoter(address _voterAddress) public {
         // check if already approved
         require(voterMetaDataArray[voters[_voterAddress]].status != applicationStatus.Approved,  "This voter is already approved");
         // upgrade status

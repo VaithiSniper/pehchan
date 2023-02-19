@@ -42,7 +42,7 @@ const Dashboard = () => {
     else router.push("/login");
   }, [tooltipState]);
 
-  const contractAddress = "0xEc0b043C4FbEE32A0c486b727980C6bfb0FFfDEA";
+  const contractAddress = "0x428c69605fb111F395663108097A1AAa7A613Bd4";
   const contractAbi = new ethers.utils.Interface(abiArray);
 
   let status = 0;
@@ -55,6 +55,7 @@ const Dashboard = () => {
     });
     console.log(data);
     if (data) status = stat(data[1]);
+    else status = stat(0);
   }
 
   return (
