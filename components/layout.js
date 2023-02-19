@@ -22,9 +22,6 @@ export default function Layout({ title, children }) {
       <div className={styles.main}>
         <main>{children}</main>
       </div>
-      <button type="button" class="btn btn-default btn-sm">
-        <span class="glyphicon glyphicon-refresh"></span> Refresh
-      </button>
     </div>
   );
 }

@@ -14,7 +14,7 @@ export default function Login() {
 
   const [addressState, setAddressState] = useState(null);
 
-  const [type, setType] = useState("admin");
+  const [type, setType] = useState("voter");
 
   const { connector, address, isConnected } = useAccount();
   const { connect, connectors, error, isLoading, pendingConnector } =

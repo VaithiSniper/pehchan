@@ -118,7 +118,7 @@ const Dashboard = () => {
           <div className="text-md text-gray-500 dark:text-gray-300 pa-4 space-x-8 flex flex-row font-space justify-center items-center text-center">
             <>
               <Card
-                title="Fill in your apllication"
+                title="Fill in your application"
                 text="Apply"
                 path="/user/application"
               />
@@ -146,9 +146,6 @@ const Dashboard = () => {
             <div className="text-md text-gray-500 dark:text-gray-300 pa-4 space-x-8 flex flex-row font-space justify-center items-center text-center">
               <>
                 <Card title="Ongoing elections" text="Vote" path="vote" />
-              </>
-              <>
-                <Card title="View previous elections" text="View" path="view" />
               </>
             </div>
           </>
