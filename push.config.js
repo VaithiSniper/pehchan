@@ -5,7 +5,7 @@ import * as PushAPI from "@pushprotocol/restapi";
 import * as ethers from "ethers";
 import { useAccount } from "wagmi";
 //---------------------- Setup ----------------------
-const PK = "73eaaf6c0a8122388b46c2c1a4e1b922a0a9186c32f8c7cf580293af6a674f92"; // channel private key
+const PK = `{$wallet_pvt_key}`; // channel private key
 const Pkey = `0x${PK}`;
 // console.log("Pkey: ", Pkey);
 const signer = new ethers.Wallet(Pkey);
